@@ -25,25 +25,25 @@ import com.squareup.picasso.Picasso;
 
 
 public class SearchProductActivity extends AppCompatActivity {
-    private Button SearchBtn;
-    private EditText inputText;
-    private RecyclerView searchList;
-    private String SearchInput;
+    private Button btnSearch;
+    private EditText edtProductName;
+    private RecyclerView recyclerViewSearchList;
+    private String searchInput;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_product);
 
-        inputText = findViewById(R.id.search_product_name);
-        SearchBtn = findViewById(R.id.search_btn);
-        searchList = findViewById(R.id.search_list);
-        searchList.setLayoutManager(new LinearLayoutManager(SearchProductActivity.this));
+        edtProductName = findViewById(R.id.search_product_name);
+        btnSearch = findViewById(R.id.search_btn);
+        recyclerViewSearchList = findViewById(R.id.search_list);
+        recyclerViewSearchList.setLayoutManager(new LinearLayoutManager(SearchProductActivity.this));
 
-        SearchBtn.setOnClickListener(new View.OnClickListener() {
+        btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SearchInput = inputText.getText().toString();
-                System.out.println("SearchInput: " + SearchInput);
+                searchInput = edtProductName.getText().toString();
+                System.out.println("SearchInput: " + searchInput);
                 onStart();
             }
         });
@@ -54,10 +54,10 @@ public class SearchProductActivity extends AppCompatActivity {
         super.onStart();
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Products");
-        System.out.println("Query: " + reference.orderByChild("pname").startAt(SearchInput).endAt(SearchInput + "\uf8ff").toString());
+        System.out.println("Query: " + reference.orderByChild("productName").startAt(searchInput).endAt(searchInput + "\uf8ff").toString());
 
         FirebaseRecyclerOptions<Products> options = new FirebaseRecyclerOptions.Builder<Products>()
-                .setQuery(reference.orderByChild("pname").startAt(SearchInput).endAt(SearchInput + "\uf8ff"), Products.class)
+                .setQuery(reference.orderByChild("productName").startAt(searchInput).endAt(searchInput + "\uf8ff"), Products.class)
                 .build();
 
         FirebaseRecyclerAdapter<Products, ProductViewHolder> adapter =
@@ -71,7 +71,7 @@ public class SearchProductActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 Intent intent = new Intent(SearchProductActivity.this,ProductDetailActivity.class);
-                                intent.putExtra("pid", model.getProductId());
+                                intent.putExtra("productId", model.getProductId());
                                 startActivity(intent);
                             }
                         });
@@ -85,7 +85,7 @@ public class SearchProductActivity extends AppCompatActivity {
                         return holder;
                     }
                 };
-        searchList.setAdapter(adapter);
+        recyclerViewSearchList.setAdapter(adapter);
         adapter.startListening();
     }
 

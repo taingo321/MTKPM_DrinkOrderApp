@@ -19,23 +19,23 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class AdminOrderProductsDetailActivity extends AppCompatActivity {
 
-    private RecyclerView products_list;
+    private RecyclerView recyclerViewProductsList;
     RecyclerView.LayoutManager layoutManager;
     private DatabaseReference cartListRef;
-    private String userID = "";
+    private String userId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_order_products_detail);
 
-        userID = getIntent().getStringExtra("uid");
-        products_list = findViewById(R.id.products_list);
+        userId = getIntent().getStringExtra("uid");
+        recyclerViewProductsList = findViewById(R.id.products_list);
         layoutManager = new LinearLayoutManager(this);
-        products_list.setLayoutManager(layoutManager);
+        recyclerViewProductsList.setLayoutManager(layoutManager);
 
         cartListRef = FirebaseDatabase.getInstance().getReference()
-                .child("Cart List").child("Admin View").child(userID).child("Products");
+                .child("Cart List").child("Admin View").child(userId).child("Products");
 
     }
 
@@ -63,7 +63,7 @@ public class AdminOrderProductsDetailActivity extends AppCompatActivity {
             }
         };
 
-        products_list.setAdapter(adapter);
+        recyclerViewProductsList.setAdapter(adapter);
         adapter.startListening();
     }
 }

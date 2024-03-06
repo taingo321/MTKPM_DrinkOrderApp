@@ -29,40 +29,40 @@ import java.util.HashMap;
 
 public class ProductDetailActivity extends AppCompatActivity {
 
-    private ImageView product_Image_Detail;
-    private TextView product_Name_Detail, product_Ingre_Detail, product_Price_Detail;
-    private Button fabAddProductToCart;
-    private NumberPicker number_picker;
-    private String productID = "";
+    private ImageView imageViewProductDetail;
+    private TextView txtProductNameDetail, txtProductIngredientDetail, txtProductPriceDetail;
+    private Button btnAddProductToCart;
+    private NumberPicker numberPicker;
+    private String productId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
 
-        productID = getIntent().getStringExtra("productId");
+        productId = getIntent().getStringExtra("productId");
 
-        product_Image_Detail = findViewById(R.id.product_Image_Detail);
-        product_Name_Detail = findViewById(R.id.product_Name_Detail);
-        product_Ingre_Detail = findViewById(R.id.product_Ingre_Detail);
-        product_Price_Detail = findViewById(R.id.product_Price_Detail);
+        imageViewProductDetail = findViewById(R.id.product_Image_Detail);
+        txtProductNameDetail = findViewById(R.id.product_Name_Detail);
+        txtProductIngredientDetail = findViewById(R.id.product_Ingre_Detail);
+        txtProductPriceDetail = findViewById(R.id.product_Price_Detail);
 
-        fabAddProductToCart = findViewById(R.id.fabAddProductToCart);
-        number_picker = findViewById(R.id.number_picker);
+        btnAddProductToCart = findViewById(R.id.fabAddProductToCart);
+        numberPicker = findViewById(R.id.number_picker);
 
-        fabAddProductToCart.setOnClickListener(new View.OnClickListener() {
+        btnAddProductToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 fabAddProductToCart();
             }
         });
 
-        getProductDetails(productID);
+        getProductDetails(productId);
     }
 
     private void fabAddProductToCart() {
-        String quantity = String.valueOf(number_picker.getValue());
-        checkIfProductExistsInCart(productID, quantity);
+        String quantity = String.valueOf(numberPicker.getValue());
+        checkIfProductExistsInCart(productId, quantity);
     }
 
     private void checkIfProductExistsInCart(final String productID, final String quantity) {
@@ -103,9 +103,9 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         final HashMap<String, Object> cartMap = new HashMap<>();
         cartMap.put("productId", productID);
-        cartMap.put("productName", product_Name_Detail.getText().toString());
-        cartMap.put("price", product_Price_Detail.getText().toString());
-        cartMap.put("ingredient", product_Ingre_Detail.getText().toString());
+        cartMap.put("productName", txtProductNameDetail.getText().toString());
+        cartMap.put("price", txtProductPriceDetail.getText().toString());
+        cartMap.put("ingredient", txtProductIngredientDetail.getText().toString());
         cartMap.put("date", saveCurrentDate);
         cartMap.put("time", saveCurrentTime);
         cartMap.put("quantity", quantity);
@@ -145,10 +145,10 @@ public class ProductDetailActivity extends AppCompatActivity {
                 if (snapshot.exists()){
                     Products products = snapshot.getValue(Products.class);
 
-                    product_Name_Detail.setText(products.getProductName());
-                    product_Ingre_Detail.setText(products.getIngredient());
-                    product_Price_Detail.setText(products.getPrice());
-                    Picasso.get().load(products.getImage()).into(product_Image_Detail);
+                    txtProductNameDetail.setText(products.getProductName());
+                    txtProductIngredientDetail.setText(products.getIngredient());
+                    txtProductPriceDetail.setText(products.getPrice());
+                    Picasso.get().load(products.getImage()).into(imageViewProductDetail);
                 }
             }
 

@@ -8,24 +8,24 @@ import android.view.View;
 import android.widget.ImageView;
 
 public class AdminActivity extends AppCompatActivity {
-    ImageView ivAddProduct, ivMaintain, ivInvoice, ivLogout;
+    ImageView imageViewAddProduct, imageViewMaintain, imageViewInvoice, imageViewLogout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
-        ivAddProduct = findViewById(R.id.ivAddProduct);
-        ivMaintain = findViewById(R.id.ivMaintain);
-        ivLogout = findViewById(R.id.ivLogout);
-        ivInvoice = findViewById(R.id.ivInvoice);
-        ivAddProduct.setOnClickListener(new View.OnClickListener() {
+        imageViewAddProduct = findViewById(R.id.ivAddProduct);
+        imageViewMaintain = findViewById(R.id.ivMaintain);
+        imageViewLogout = findViewById(R.id.ivLogout);
+        imageViewInvoice = findViewById(R.id.ivInvoice);
+        imageViewAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AdminActivity.this, AddNewProductActivity.class);
                 startActivity(intent);
             }
         });
-        ivMaintain.setOnClickListener(new View.OnClickListener() {
+        imageViewMaintain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AdminActivity.this, ProductActivity.class);
@@ -33,14 +33,14 @@ public class AdminActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        ivLogout.setOnClickListener(new View.OnClickListener() {
+        imageViewLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AdminActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
-        ivInvoice.setOnClickListener(new View.OnClickListener() {
+        imageViewInvoice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AdminActivity.this, AdminOrderActivity.class);

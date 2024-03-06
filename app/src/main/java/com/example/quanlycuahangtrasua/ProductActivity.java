@@ -24,8 +24,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 public class ProductActivity extends AppCompatActivity {
-    private DatabaseReference ProductsManagementRef;
-    private RecyclerView rvProductListManagement;
+    private DatabaseReference productsManagementRef;
+    private RecyclerView recyclerViewProductListManagement;
     RecyclerView.LayoutManager layoutManager;
     private String type = "";
 
@@ -34,11 +34,11 @@ public class ProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
 
-        ProductsManagementRef = FirebaseDatabase.getInstance().getReference().child("Products");
-        rvProductListManagement = findViewById(R.id.rvProductListManagement);
-        rvProductListManagement.setHasFixedSize(true);
+        productsManagementRef = FirebaseDatabase.getInstance().getReference().child("Products");
+        recyclerViewProductListManagement = findViewById(R.id.rvProductListManagement);
+        recyclerViewProductListManagement.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
-        rvProductListManagement.setLayoutManager(layoutManager);
+        recyclerViewProductListManagement.setLayoutManager(layoutManager);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -52,7 +52,7 @@ public class ProductActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         FirebaseRecyclerOptions<Products> options = new FirebaseRecyclerOptions.Builder<Products>()
-                .setQuery(ProductsManagementRef, Products.class).build();
+                .setQuery(productsManagementRef, Products.class).build();
 
         FirebaseRecyclerAdapter<Products, ProductViewHolder> adapter = new FirebaseRecyclerAdapter<Products, ProductViewHolder>(options) {
             @Override
@@ -96,7 +96,7 @@ public class ProductActivity extends AppCompatActivity {
             }
         };
 
-        rvProductListManagement.setAdapter(adapter);
+        recyclerViewProductListManagement.setAdapter(adapter);
         adapter.startListening();
     }
 

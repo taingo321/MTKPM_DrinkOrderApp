@@ -26,10 +26,10 @@ import java.util.HashMap;
 
 public class AdminMaintainActivity extends AppCompatActivity {
 
-    private Button apply_change_button, delete_button;
-    private EditText product_Name_maintain, product_Price_maintain, product_Ingre_maintain;
-    private ImageView product_Image_maintain;
-    private String productID = "";
+    private Button btnApllayChange, btnDelete;
+    private EditText edtProductNameMaintain, edtProductPriceMaintain, edtProductIngredientMaintain;
+    private ImageView imageViewProductImageMaintain;
+    private String productId = "";
     private DatabaseReference productsRef;
 
     @Override
@@ -37,27 +37,27 @@ public class AdminMaintainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_maintain);
 
-        productID = getIntent().getStringExtra("pid");
-        productsRef = FirebaseDatabase.getInstance().getReference().child("Products").child(productID);
+        productId = getIntent().getStringExtra("productId");
+        productsRef = FirebaseDatabase.getInstance().getReference().child("Products").child(productId);
 
-        apply_change_button = findViewById(R.id.apply_change_button);
-        delete_button = findViewById(R.id.delete_button);
+        btnApllayChange = findViewById(R.id.apply_change_button);
+        btnDelete = findViewById(R.id.delete_button);
 
-        product_Name_maintain = findViewById(R.id.product_Name_maintain);
-        product_Price_maintain = findViewById(R.id.product_Price_maintain);
-        product_Ingre_maintain = findViewById(R.id.product_Ingre_maintain);
-        product_Image_maintain = findViewById(R.id.product_Image_maintain);
+        edtProductNameMaintain = findViewById(R.id.product_Name_maintain);
+        edtProductPriceMaintain = findViewById(R.id.product_Price_maintain);
+        edtProductIngredientMaintain = findViewById(R.id.product_Ingre_maintain);
+        imageViewProductImageMaintain = findViewById(R.id.product_Image_maintain);
 
         displaySpecificProductInfo();
 
-        apply_change_button.setOnClickListener(new View.OnClickListener() {
+        btnApllayChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 applyChanges();
             }
         });
 
-        delete_button.setOnClickListener(new View.OnClickListener() {
+        btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CharSequence options[] = new CharSequence[]{
@@ -97,22 +97,22 @@ public class AdminMaintainActivity extends AppCompatActivity {
     }
 
     private void applyChanges() {
-        String pName = product_Name_maintain.getText().toString();
-        String pPrice = product_Price_maintain.getText().toString();
-        String pIngre = product_Ingre_maintain.getText().toString();
+        String productName = edtProductNameMaintain.getText().toString();
+        String productPrice = edtProductPriceMaintain.getText().toString();
+        String productIngredient = edtProductIngredientMaintain.getText().toString();
 
-        if (pName.equals("")){
+        if (productName.equals("")){
             Toast.makeText(this, "Vui lòng nhập tên sản phẩm", Toast.LENGTH_SHORT).show();
-        }else if (pPrice.equals("")){
+        }else if (productPrice.equals("")){
             Toast.makeText(this, "Vui lòng nhập giá sản phẩm", Toast.LENGTH_SHORT).show();
-        }else if (pIngre.equals("")){
+        }else if (productIngredient.equals("")){
             Toast.makeText(this, "Vui lòng nhập công thức sản phẩm", Toast.LENGTH_SHORT).show();
         }else {
             HashMap<String, Object> productMap = new HashMap<>();
-            productMap.put("pid", productID);
-            productMap.put("ingre", pIngre);
-            productMap.put("price", pPrice);
-            productMap.put("pname", pName);
+            productMap.put("productId", productId);
+            productMap.put("ingredient", productIngredient);
+            productMap.put("price", productPrice);
+            productMap.put("productName", productName);
 
             productsRef.updateChildren(productMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
@@ -134,15 +134,15 @@ public class AdminMaintainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
-                    String pName = snapshot.child("pname").getValue().toString();
-                    String pPrice = snapshot.child("price").getValue().toString();
-                    String pIngre = snapshot.child("ingre").getValue().toString();
-                    String pImage = snapshot.child("image").getValue().toString();
+                    String productName = snapshot.child("productName").getValue().toString();
+                    String productPrice = snapshot.child("price").getValue().toString();
+                    String productIngredient = snapshot.child("ingredient").getValue().toString();
+                    String productImage = snapshot.child("image").getValue().toString();
 
-                    product_Name_maintain.setText(pName);
-                    product_Price_maintain.setText(pPrice);
-                    product_Ingre_maintain.setText(pIngre);
-                    Picasso.get().load(pImage).into(product_Image_maintain);
+                    edtProductNameMaintain.setText(productName);
+                    edtProductIngredientMaintain.setText(productPrice);// Tại sao set 2 cái tên
+                    edtProductIngredientMaintain.setText(productIngredient);// note
+                    Picasso.get().load(productImage).into(imageViewProductImageMaintain);
                 }
             }
 

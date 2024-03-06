@@ -1,22 +1,18 @@
 package com.example.quanlycuahangtrasua.Model;
 
 public class Products {
-    private String productId, productName, ingredient, price, image, quantity ;
+    private String productId, productName, ingredient, price, image ;
 
     public Products() {
     }
 
-    public Products(String productId, String productName, String ingredient, String price,
-                   String quantity ,String image) {
+    public Products(String productId, String productName, String ingredient, String price,String image) {
         this.productId = productId;
         this.productName = productName;
         this.ingredient = ingredient;
         this.price = price;
-        this.quantity = quantity;
         this.image = image;
     }
-    public String getQuantity(){return  quantity;}
-    public void setQuantity(String quantity){this.quantity = quantity;}
     public String getProductId() {
         return productId;
     }

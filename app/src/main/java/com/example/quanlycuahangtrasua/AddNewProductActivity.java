@@ -27,38 +27,38 @@ import com.google.firebase.storage.UploadTask;
 import java.util.HashMap;
 
 public class AddNewProductActivity extends AppCompatActivity {
-    private String product_name, product_ingre, product_price;
-    private Button add_new_product;
-    private ImageView select_product_image;
-    private EditText ProductName, ProductIngre, ProductPrice;
-    private  static final int GalleryPick = 1;
-    private Uri ImageUri;
+    private String productName, productIngredient, productPrice;
+    private Button btnAddNewProduct;
+    private ImageView imageViewSelectProductImage;
+    private EditText editTextProductName, editTextProductIngredient, editTextProductPrice;
+    private  static final int GALLERY_PICK = 1;
+    private Uri uri;
     private String productKey, downloadImageUrl;
-    private StorageReference ProductImagesRef;
-    private DatabaseReference ProductsRef;
+    private StorageReference productImagesRef;
+    private DatabaseReference productsRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_product);
 
-        ProductImagesRef = FirebaseStorage.getInstance().getReference().child("Product Images");
-        ProductsRef = FirebaseDatabase.getInstance().getReference().child("Products");
+        productImagesRef = FirebaseStorage.getInstance().getReference().child("Product Images");
+        productsRef = FirebaseDatabase.getInstance().getReference().child("Products");
 
-        add_new_product = findViewById(R.id.add_new_product);
-        select_product_image = findViewById(R.id.select_product_image);
-        ProductName = findViewById(R.id.product_name);
-        ProductIngre = findViewById(R.id.product_ingre);
-        ProductPrice = findViewById(R.id.product_price);
+        btnAddNewProduct = findViewById(R.id.add_new_product);
+        imageViewSelectProductImage = findViewById(R.id.select_product_image);
+        editTextProductName = findViewById(R.id.product_name);
+        editTextProductIngredient = findViewById(R.id.product_ingre);
+        editTextProductPrice = findViewById(R.id.product_price);
 
-        select_product_image.setOnClickListener(new View.OnClickListener() {
+        imageViewSelectProductImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 OpenGallery();
             }
         });
 
-        add_new_product.setOnClickListener(new View.OnClickListener() {
+        btnAddNewProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -71,31 +71,31 @@ public class AddNewProductActivity extends AppCompatActivity {
         Intent galleryIntent = new Intent();
         galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
         galleryIntent.setType("image/*");
-        startActivityForResult(galleryIntent, GalleryPick);
+        startActivityForResult(galleryIntent, GALLERY_PICK);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == GalleryPick && resultCode == RESULT_OK && data != null){
-            ImageUri = data.getData();
-            select_product_image.setImageURI(ImageUri);
+        if (requestCode == GALLERY_PICK && resultCode == RESULT_OK && data != null){
+            uri = data.getData();
+            imageViewSelectProductImage.setImageURI(uri);
         }
     }
 
     private void ValidateProductData(){
-        product_ingre = ProductIngre.getText().toString();
-        product_price = ProductPrice.getText().toString();
-        product_name = ProductName.getText().toString();
+        productIngredient = editTextProductIngredient.getText().toString();
+        productPrice = editTextProductPrice.getText().toString();
+        productName = editTextProductName.getText().toString();
 
-        if (ImageUri == null){
+        if (uri == null){
             Toast.makeText(this, "Vui lòng chọn hình ảnh...", Toast.LENGTH_SHORT).show();
-        } else if (TextUtils.isEmpty(product_name)) {
+        } else if (TextUtils.isEmpty(productName)) {
             Toast.makeText(this, "Vui lòng nhập tên sản phẩm...", Toast.LENGTH_SHORT).show();
-        }else if (TextUtils.isEmpty(product_ingre)) {
+        }else if (TextUtils.isEmpty(productIngredient)) {
             Toast.makeText(this, "Vui lòng nhập công thức...", Toast.LENGTH_SHORT).show();
-        }else if (TextUtils.isEmpty(product_price)) {
+        }else if (TextUtils.isEmpty(productPrice)) {
             Toast.makeText(this, "Vui lòng nhập giá tiền sản phẩm...", Toast.LENGTH_SHORT).show();
         }else {
             StoreProductInformation();
@@ -104,11 +104,11 @@ public class AddNewProductActivity extends AppCompatActivity {
 
     private void StoreProductInformation() {
 
-        productKey = ProductsRef.push().getKey();
+        productKey = productsRef.push().getKey();
 
-        StorageReference filePath = ProductImagesRef.child(ImageUri.getLastPathSegment() + productKey + ".jpg");
+        StorageReference filePath = productImagesRef.child(uri.getLastPathSegment() + productKey + ".jpg");
 
-        final UploadTask uploadTask = filePath.putFile(ImageUri);
+        final UploadTask uploadTask = filePath.putFile(uri);
 
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
@@ -151,12 +151,12 @@ public class AddNewProductActivity extends AppCompatActivity {
     private void SaveProductInfoToDatabase() {
         HashMap<String, Object> productMap = new HashMap<>();
         productMap.put("productId", productKey);
-        productMap.put("productName", product_name);
-        productMap.put("ingredient", product_ingre);
+        productMap.put("productName", productName);
+        productMap.put("ingredient", productIngredient);
         productMap.put("image", downloadImageUrl);
-        productMap.put("price", product_price);
+        productMap.put("price", productPrice);
 
-        ProductsRef.child(productKey).updateChildren(productMap)
+        productsRef.child(productKey).updateChildren(productMap)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

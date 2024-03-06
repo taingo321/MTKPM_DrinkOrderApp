@@ -26,34 +26,34 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private TextInputEditText login_username_input, login_password_input;
-    private TextInputLayout layusername,laypassword;
-    private ProgressDialog loadingBar;
-    private AppCompatButton login_button;
-    private TextView admin_panel_link, not_admin_panel_link;
+    private TextInputEditText inputEditTextUsername, inputEditTextPassword;
+    private TextInputLayout inputLayoutUsername,inputLayoutPassword;
+    private ProgressDialog progressBar;
+    private AppCompatButton compatButtonLogin;
+    private TextView txtAdmin, txtNotAdmin;
     //private TextView ChangeToReg;
-    private String parentDBName = "Users";
-    boolean isValidUsername,isValidPassword=false;
+    private String parentName = "Users";
+    boolean isValidUsername,isValidPassword = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        login_button = findViewById(R.id.login_button);
+        compatButtonLogin = findViewById(R.id.login_button);
         //ChangeToReg = findViewById(R.id.tvChangeToReg);
-        layusername= findViewById(R.id.til_UserName_log);
-        laypassword=findViewById(R.id.til_Pass_log);
-        login_username_input = findViewById(R.id.edt_UserName_log);
-        login_password_input = findViewById(R.id.edt_Pass_log);
+        inputLayoutUsername= findViewById(R.id.til_UserName_log);
+        inputLayoutPassword=findViewById(R.id.til_Pass_log);
+        inputEditTextUsername = findViewById(R.id.edt_UserName_log);
+        inputEditTextPassword = findViewById(R.id.edt_Pass_log);
 
-        loadingBar = new ProgressDialog(this);
+        progressBar = new ProgressDialog(this);
 
-        login_username_input.addTextChangedListener(new LoginActivity.UsernameTextWatcher());
-        login_password_input.addTextChangedListener(new LoginActivity.PasswordTextWatcher());
-        admin_panel_link = findViewById(R.id.admin_panel_link);
-        not_admin_panel_link = findViewById(R.id.not_admin_panel_link);
-        login_button.setOnClickListener(new View.OnClickListener() {
+        inputEditTextUsername.addTextChangedListener(new LoginActivity.UsernameTextWatcher());
+        inputEditTextPassword.addTextChangedListener(new LoginActivity.PasswordTextWatcher());
+        txtAdmin = findViewById(R.id.admin_panel_link);
+        txtNotAdmin = findViewById(R.id.not_admin_panel_link);
+        compatButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(areAllFieldsValid()){
@@ -62,23 +62,23 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
-        admin_panel_link.setOnClickListener(new View.OnClickListener() {
+        txtAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login_button.setText("Đăng nhập Admin");
-                admin_panel_link.setVisibility(View.INVISIBLE);
-                not_admin_panel_link.setVisibility(View.VISIBLE);
-                parentDBName = "Admins";
+                compatButtonLogin.setText("Đăng nhập Admin");
+                txtAdmin.setVisibility(View.INVISIBLE);
+                txtNotAdmin.setVisibility(View.VISIBLE);
+                parentName = "Admins";
             }
         });
 
-        not_admin_panel_link.setOnClickListener(new View.OnClickListener() {
+        txtNotAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login_button.setText("Đăng nhập");
-                admin_panel_link.setVisibility(View.VISIBLE);
-                not_admin_panel_link.setVisibility(View.INVISIBLE);
-                parentDBName = "Users";
+                compatButtonLogin.setText("Đăng nhập");
+                txtAdmin.setVisibility(View.VISIBLE);
+                txtNotAdmin.setVisibility(View.INVISIBLE);
+                parentName = "Users";
             }
         });
 
@@ -102,15 +102,15 @@ public class LoginActivity extends AppCompatActivity {
 
             if (username.isEmpty()) {
                 isValidUsername=false;
-                layusername.setErrorEnabled(true);
-                layusername.setError("Không được bỏ trống");
+                inputLayoutUsername.setErrorEnabled(true);
+                inputLayoutUsername.setError("Không được bỏ trống");
             } else if (username.length() < 7) {
                 isValidUsername=false;
-                layusername.setErrorEnabled(true);
-                layusername.setError("Username trên 7 kí tự");
+                inputLayoutUsername.setErrorEnabled(true);
+                inputLayoutUsername.setError("Username trên 7 kí tự");
             } else {
                 isValidUsername=true;
-                layusername.setErrorEnabled(false);
+                inputLayoutUsername.setErrorEnabled(false);
             }
         }
         @Override
@@ -129,15 +129,15 @@ public class LoginActivity extends AppCompatActivity {
 
             if (password.isEmpty()) {
                 isValidPassword=false;
-                laypassword.setErrorEnabled(true);
-                laypassword.setError("Không được bỏ trống");
+                inputLayoutPassword.setErrorEnabled(true);
+                inputLayoutPassword.setError("Không được bỏ trống");
             } else if (password.length() < 6) {
                 isValidPassword=false;
-                laypassword.setErrorEnabled(true);
-                laypassword.setError("Password trên 6 kí tự");
+                inputLayoutPassword.setErrorEnabled(true);
+                inputLayoutPassword.setError("Password trên 6 kí tự");
             } else {
                 isValidPassword=true;
-                laypassword.setErrorEnabled(false);
+                inputLayoutPassword.setErrorEnabled(false);
             }
         }
         @Override
@@ -146,8 +146,8 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
     private void loginUser() {
-        String username = login_username_input.getText().toString();
-        String password = login_password_input.getText().toString();
+        String username = inputEditTextUsername.getText().toString();
+        String password = inputEditTextPassword.getText().toString();
 
         if (TextUtils.isEmpty(username)){
             Toast.makeText(this, "Vui lòng nhập tên tài khoản", Toast.LENGTH_SHORT).show();
@@ -158,10 +158,10 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         else {
-            loadingBar.setTitle("Đăng nhập tài khoản");
-            loadingBar.setMessage("Vui lòng chờ");
-            loadingBar.setCanceledOnTouchOutside(false);
-            loadingBar.show();
+            progressBar.setTitle("Đăng nhập tài khoản");
+            progressBar.setMessage("Vui lòng chờ");
+            progressBar.setCanceledOnTouchOutside(false);
+            progressBar.show();
 
             AllowAccessToAccount(username, password);
         }
@@ -175,22 +175,22 @@ public class LoginActivity extends AppCompatActivity {
         RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.child(parentDBName).child(username).exists()){
-                    Users usersData = snapshot.child(parentDBName).child(username).getValue(Users.class);
+                if (snapshot.child(parentName).child(username).exists()){
+                    Users usersData = snapshot.child(parentName).child(username).getValue(Users.class);
 
                     if (usersData.getUsername().equals(username)){
                         if (usersData.getPassword().equals(password)){
-                            if (parentDBName.equals("Admins")){
+                            if (parentName.equals("Admins")){
                                 Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                                loadingBar.dismiss();
+                                progressBar.dismiss();
 
                                 Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
                                 Prevalent.currentOnlineUser = usersData;
                                 startActivity(intent);
                             }
-                            else if (parentDBName.equals("Users")){
+                            else if (parentName.equals("Users")){
                                 Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                                loadingBar.dismiss();
+                                progressBar.dismiss();
 
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 Prevalent.currentOnlineUser = usersData;
@@ -199,7 +199,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         }
                         else {
-                            loadingBar.dismiss();
+                            progressBar.dismiss();
                             Toast.makeText(LoginActivity.this, "Mật khẩu không đúng", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -207,7 +207,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 else {
                     Toast.makeText(LoginActivity.this, "Tài khoản " + username + " không tồn tại", Toast.LENGTH_SHORT).show();
-                    loadingBar.dismiss();
+                    progressBar.dismiss();
                 }
             }
 

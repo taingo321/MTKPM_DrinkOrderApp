@@ -23,7 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class AdminOrderActivity extends AppCompatActivity {
 
-    private RecyclerView orders_list;
+    private RecyclerView recyclerViewOrdersList;
     private DatabaseReference ordersRef;
 
     @Override
@@ -33,8 +33,8 @@ public class AdminOrderActivity extends AppCompatActivity {
 
         ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders");
 
-        orders_list = findViewById(R.id.orders_list);
-        orders_list.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewOrdersList = findViewById(R.id.orders_list);
+        recyclerViewOrdersList.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
@@ -101,7 +101,7 @@ public class AdminOrderActivity extends AppCompatActivity {
                         return new AdminOrdersViewHolder(view);
                     }
                 };
-        orders_list.setAdapter(adapter);
+        recyclerViewOrdersList.setAdapter(adapter);
         adapter.startListening();
     }
 

@@ -31,27 +31,27 @@ import java.util.Map;
 
 public class ConfirmOrderActivity extends AppCompatActivity {
 
-    private EditText note_input;
+    private EditText edtNoteInput;
     private String orderKey;
-    private Button confirm_button;
+    private Button btnConfirm;
     private String totalAmount = "";
-    private DatabaseReference OrdersRef;
+    private DatabaseReference ordersRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_order);
 
-        OrdersRef = FirebaseDatabase.getInstance().getReference().child("Orders");
+        ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders");
 
         totalAmount = getIntent().getStringExtra("Tổng tiền");
         Toast.makeText(this, "Tổng tiền = " + totalAmount + "đ", Toast.LENGTH_SHORT).show();
 
-        note_input = findViewById(R.id.note_input);
+        edtNoteInput = findViewById(R.id.note_input);
 
-        confirm_button = findViewById(R.id.confirm_button);
+        btnConfirm = findViewById(R.id.confirm_button);
 
-        confirm_button.setOnClickListener(new View.OnClickListener() {
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ConfirmOrder();
@@ -66,7 +66,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         saveCurrentDate = currentDate.format(calForDate.getTime());
         SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
         saveCurrentTime = currentTime.format(calForDate.getTime());
-        orderKey = OrdersRef.push().getKey();
+        orderKey = ordersRef.push().getKey();
 
         final DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference()
                 .child("Orders").child(Prevalent.currentOnlineUser.getUsername()).child(orderKey);
@@ -74,7 +74,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         HashMap<String, Object> ordersMap = new HashMap<>();
         ordersMap.put("oid", orderKey);
         ordersMap.put("totalAmount", totalAmount);
-        ordersMap.put("note", note_input.getText().toString());
+        ordersMap.put("note", edtNoteInput.getText().toString());
         ordersMap.put("date", saveCurrentDate);
         ordersMap.put("time", saveCurrentTime);
 
@@ -93,7 +93,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 //                    String image = productSnapshot.child("image").getValue(String.class);
                     productList.add(new Cart(productId,productName,price,quantity));
                 }
-                Orders order = new Orders(orderKey, totalAmount, note_input.getText().toString(), saveCurrentDate, saveCurrentTime, productList);
+                Orders order = new Orders(orderKey, totalAmount, edtNoteInput.getText().toString(), saveCurrentDate, saveCurrentTime, productList);
                 ordersRef.setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

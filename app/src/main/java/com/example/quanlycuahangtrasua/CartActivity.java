@@ -27,9 +27,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class CartActivity extends AppCompatActivity {
-    private RecyclerView cart_list;
+    private RecyclerView recyclerViewCartList;
     private RecyclerView.LayoutManager layoutManager;
-    private Button next_button;
+    private Button btnNext;
     private TextView txtTotalAmount;
     private int overTotalPrice = 0;
 
@@ -38,15 +38,15 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        cart_list = findViewById(R.id.cart_list);
-        cart_list.setHasFixedSize(true);
+        recyclerViewCartList = findViewById(R.id.cart_list);
+        recyclerViewCartList.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
-        cart_list.setLayoutManager(layoutManager);
+        recyclerViewCartList.setLayoutManager(layoutManager);
         txtTotalAmount = findViewById(R.id.total_price);
 
-        next_button = findViewById(R.id.next_button);
+        btnNext = findViewById(R.id.next_button);
 
-        next_button.setOnClickListener(new View.OnClickListener() {
+        btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 txtTotalAmount.setText("Tổng tiền = " + String.valueOf(overTotalPrice) + "đ");
@@ -132,7 +132,7 @@ public class CartActivity extends AppCompatActivity {
             }
         };
 
-        cart_list.setAdapter(adapter);
+        recyclerViewCartList.setAdapter(adapter);
         adapter.startListening();
     }
 }

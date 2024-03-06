@@ -29,10 +29,10 @@ import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private Button register;
-    private TextInputEditText register_username_input, register_phone_input, register_password_input;
-    private TextInputLayout layusername,layphone,laypassword;
-    private ProgressDialog loadingBar;
+    private Button btnRegister;
+    private TextInputEditText inputEditTextRegisterUsername, inputEditTextRegisterPhone, inputEditTextRegisterPassword;
+    private TextInputLayout inputLayoutUsername,inputLayoutPhone,inputLayoutPassword;
+    private ProgressDialog progressBar;
     boolean isValidPhoneNumber,isValidUsername,isValidPassword=false;
 
     @Override
@@ -40,20 +40,20 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        register = findViewById(R.id.register);
-        register_username_input = findViewById(R.id.edt_UserName_reg);
-        register_phone_input = findViewById(R.id.edt_Phone_reg);
-        register_password_input = findViewById(R.id.edt_Pass_reg);
-        layusername=findViewById(R.id.til_UserName_reg);
-        layphone=findViewById(R.id.til_Phone_reg);
-        laypassword=findViewById(R.id.til_Pass_reg);
+        btnRegister = findViewById(R.id.register);
+        inputEditTextRegisterUsername = findViewById(R.id.edt_UserName_reg);
+        inputEditTextRegisterPhone = findViewById(R.id.edt_Phone_reg);
+        inputEditTextRegisterPassword = findViewById(R.id.edt_Pass_reg);
+        inputLayoutUsername=findViewById(R.id.til_UserName_reg);
+        inputLayoutPhone=findViewById(R.id.til_Phone_reg);
+        inputLayoutPassword=findViewById(R.id.til_Pass_reg);
 
-        loadingBar = new ProgressDialog(this);
+        progressBar = new ProgressDialog(this);
 
-        register_username_input.addTextChangedListener(new UsernameTextWatcher());
-        register_phone_input.addTextChangedListener(new PhoneTextWatcher());
-        register_password_input.addTextChangedListener(new PasswordTextWatcher());
-        register.setOnClickListener(new View.OnClickListener() {
+        inputEditTextRegisterUsername.addTextChangedListener(new UsernameTextWatcher());
+        inputEditTextRegisterPhone.addTextChangedListener(new PhoneTextWatcher());
+        inputEditTextRegisterPassword.addTextChangedListener(new PasswordTextWatcher());
+        btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CreateAccount();
@@ -62,9 +62,9 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void CreateAccount() {
-        String username = register_username_input.getText().toString();
-        String phone = register_phone_input.getText().toString();
-        String password = register_password_input.getText().toString();
+        String username = inputEditTextRegisterUsername.getText().toString();
+        String phone = inputEditTextRegisterPhone.getText().toString();
+        String password = inputEditTextRegisterPassword.getText().toString();
 
         if(areAllFieldsValid()){
             ValidateUsername(username, phone, password);
@@ -84,19 +84,19 @@ public class RegisterActivity extends AppCompatActivity {
                     userdataMap.put("password", password);
                     userdataMap.put("username", username);
 
-                    RootRef.child("Users").child(username).updateChildren(userdataMap)
+                    RootRef.child("users").child(username).updateChildren(userdataMap)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()){
                                         Toast.makeText(RegisterActivity.this, "Tài khoản của bạn đã tạo thành công", Toast.LENGTH_SHORT).show();
-                                        loadingBar.dismiss();
+                                        progressBar.dismiss();
 
                                         Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                         startActivity(intent);
                                     }
                                     else {
-                                        loadingBar.dismiss();
+                                        progressBar.dismiss();
                                         Toast.makeText(RegisterActivity.this, "Đã xảy ra lỗi,vui lòng thử lại", Toast.LENGTH_SHORT).show();
                                     }
                                 }
@@ -104,7 +104,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
                 else {
                     Toast.makeText(RegisterActivity.this, "Tên tài khoản " + username + " đã tồn tại.", Toast.LENGTH_SHORT).show();
-                    loadingBar.dismiss();
+                    progressBar.dismiss();
                     Toast.makeText(RegisterActivity.this, "Vui lòng thử lại", Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
@@ -129,15 +129,15 @@ public class RegisterActivity extends AppCompatActivity {
 
             if (username.isEmpty()) {
                 isValidUsername=false;
-                layusername.setErrorEnabled(true);
-                layusername.setError("Không được bỏ trống");
+                inputLayoutUsername.setErrorEnabled(true);
+                inputLayoutUsername.setError("Không được bỏ trống");
             } else if (username.length() < 7) {
                 isValidUsername=false;
-                layusername.setErrorEnabled(true);
-                layusername.setError("Username trên 7 kí tự");
+                inputLayoutUsername.setErrorEnabled(true);
+                inputLayoutUsername.setError("Username trên 7 kí tự");
             } else {
                 isValidUsername=true;
-                layusername.setErrorEnabled(false);
+                inputLayoutUsername.setErrorEnabled(false);
             }
         }
         @Override
@@ -157,15 +157,15 @@ public class RegisterActivity extends AppCompatActivity {
             String phoneNumber = s.toString().trim();
             if (phoneNumber.isEmpty()) {
                 isValidPhoneNumber=false;
-                layphone.setErrorEnabled(true);
-                layphone.setError("Không được bỏ trống");
+                inputLayoutPhone.setErrorEnabled(true);
+                inputLayoutPhone.setError("Không được bỏ trống");
             } else if (!isValidPhoneNumber(phoneNumber)) {
                 isValidPhoneNumber=false;
-                layphone.setErrorEnabled(true);
-                layphone.setError("Không hợp lệ");
+                inputLayoutPhone.setErrorEnabled(true);
+                inputLayoutPhone.setError("Không hợp lệ");
             } else {
                 isValidPhoneNumber=true;
-                layphone.setErrorEnabled(false);
+                inputLayoutPhone.setErrorEnabled(false);
             }
         }
 
@@ -185,15 +185,15 @@ public class RegisterActivity extends AppCompatActivity {
 
             if (password.isEmpty()) {
                 isValidPassword=false;
-                laypassword.setErrorEnabled(true);
-                laypassword.setError("Không được bỏ trống");
+                inputLayoutPassword.setErrorEnabled(true);
+                inputLayoutPassword.setError("Không được bỏ trống");
             } else if (password.length() < 6) {
                 isValidPassword=false;
-                laypassword.setErrorEnabled(true);
-                laypassword.setError("Password trên 6 kí tự");
+                inputLayoutPassword.setErrorEnabled(true);
+                inputLayoutPassword.setError("Password trên 6 kí tự");
             } else {
                 isValidPassword=true;
-                laypassword.setErrorEnabled(false);
+                inputLayoutPassword.setErrorEnabled(false);
             }
         }
         @Override
