@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" >
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.QuanLyCuaHangTraSua"
+        tools:targetApi="31" >
+        <activity
+            android:name=".SearchProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ConfirmOrderActivity"
+            android:exported="false"
+            android:label="Trang xác nhận hóa đơn" />
+        <activity
+            android:name=".CartActivity"
+            android:exported="false"
+            android:label="Trang giỏ hàng" />
+        <activity
+            android:name=".AdminActivity"
+            android:exported="false"
+            android:label="Trang quản lý" />
+        <activity
+            android:name=".AdminMaintainActivity"
+            android:exported="false"
+            android:label="Trang chỉnh sửa sản phẩm" />
+        <activity
+            android:name=".AdminOrderActivity"
+            android:exported="false"
+            android:label="Trang quản lý hóa đơn" />
+        <activity
+            android:name=".AdminOrderProductsDetailActivity"
+            android:exported="false"
+            android:label="Trang chi tiết hóa đơn" />
+        <activity
+            android:name=".ProductDetailActivity"
+            android:exported="false"
+            android:label="Trang chi tiết sản phẩm" />
+        <activity
+            android:name=".ProductActivity"
+            android:exported="false"
+            android:label="Trang sản phẩm" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true"
+            android:label="Quản lý cửa hàng trà sữa" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:label="Trang chủ" />
+        <activity
+            android:name=".AddNewProductActivity"
+            android:exported="false"
+            android:label="Trang thêm sản phẩm" />
+    </application>
+
+</manifest>
