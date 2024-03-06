@@ -8,10 +8,10 @@ public class Orders {
     private String note;
     private String date;
     private String time;
-    private List<Products> products;
+    private List<Cart> products;
 
     public Orders(String oid, String totalAmount, String note, String date, String time,
-                  List<Products> products) {
+                  List<Cart> products) {
         this.oid = oid;
         this.totalAmount = totalAmount;
         this.note = note;
@@ -60,11 +60,11 @@ public class Orders {
         this.time = time;
     }
 
-    public List<Products> getProducts() {
+    public List<Cart> getProducts() {
         return products;
     }
 
-    public void setProducts(List<Products> products) {
+    public void setProducts(List<Cart> products) {
         this.products = products;
     }
 }

@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.quanlycuahangtrasua.Model.Cart;
 import com.example.quanlycuahangtrasua.Model.Orders;
 import com.example.quanlycuahangtrasua.Model.Products;
 import com.example.quanlycuahangtrasua.Prevalent.Prevalent;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ConfirmOrderActivity extends AppCompatActivity {
 
@@ -81,14 +83,15 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         cartRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<Products> productList = new ArrayList<>();
+                List<Cart> productList = new ArrayList<>();
                 for (DataSnapshot productSnapshot : dataSnapshot.getChildren()) {
                     String productId = productSnapshot.getKey();
                     String productName = productSnapshot.child("productName").getValue(String.class);
                     String price = productSnapshot.child("price").getValue(String.class);
-                    String ingredient = productSnapshot.child("ingredient").getValue(String.class);
-                    String image = productSnapshot.child("image").getValue(String.class);
-                    productList.add(new Products(productId, productName, ingredient, price, image));
+//                    String ingredient = productSnapshot.child("ingredient").getValue(String.class);
+                    String quantity = productSnapshot.child("quantity").getValue(String.class);
+//                    String image = productSnapshot.child("image").getValue(String.class);
+                    productList.add(new Cart(productId,productName,price,quantity));
                 }
                 Orders order = new Orders(orderKey, totalAmount, note_input.getText().toString(), saveCurrentDate, saveCurrentTime, productList);
                 ordersRef.setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
