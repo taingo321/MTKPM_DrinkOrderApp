@@ -13,20 +13,20 @@
         android:background="@color/teal_200">
 
         <TextView
-            android:id="@+id/product_Name_Cart"
+            android:id="@+id/order_day_or_name"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:text="Product Name"
+            android:text="Order day"
             android:textSize="18dp"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:layout_marginLeft="5dp"/>
 
         <TextView
-            android:id="@+id/product_Quantity_Cart"
+            android:id="@+id/order_total"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:text="Product Quantity"
+            android:text="Order total"
             android:textSize="18dp"
             android:textStyle="bold"
             android:textColor="@color/black"
@@ -36,11 +36,11 @@
             android:layout_marginRight="5dp"/>
 
         <TextView
-            android:id="@+id/product_Price_Cart"
+            android:id="@+id/order_time_or_quality"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/product_Name_Cart"
-            android:text="Product Price"
+            android:layout_below="@id/order_day_or_name"
+            android:text="Order Time"
             android:textSize="16dp"
             android:textColor="@color/black"
             android:layout_marginLeft="5dp"

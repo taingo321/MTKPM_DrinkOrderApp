@@ -10,6 +10,9 @@ public class Orders {
     private String time;
     private List<Cart> products;
 
+    public Orders() {
+    }
+
     public Orders(String oid, String totalAmount, String note, String date, String time,
                   List<Cart> products) {
         this.oid = oid;

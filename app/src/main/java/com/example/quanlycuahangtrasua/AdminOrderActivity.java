@@ -3,6 +3,7 @@ package com.example.quanlycuahangtrasua;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,21 +11,30 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quanlycuahangtrasua.Model.AdminOrder;
+import com.example.quanlycuahangtrasua.Model.Orders;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Objects;
 
 public class AdminOrderActivity extends AppCompatActivity {
 
     private RecyclerView recyclerViewOrdersList;
     private DatabaseReference ordersRef;
+    private String totalAmount,date,time;
+    private int resultTotalAmount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,20 +60,69 @@ public class AdminOrderActivity extends AppCompatActivity {
                 new FirebaseRecyclerAdapter<AdminOrder, AdminOrdersViewHolder>(options) {
                     @Override
                     protected void onBindViewHolder(@NonNull AdminOrdersViewHolder holder, int position, @NonNull AdminOrder model) {
-                        holder.order_key.setText(model.getOid());
-                        holder.order_total_price.setText(model.getTotalAmount());
-                        holder.order_date_time.setText(model.getDate());
 
-                        holder.show_order_products.setOnClickListener(new View.OnClickListener() {
+
+                        ordersRef.addChildEventListener(new ChildEventListener() {
                             @Override
-                            public void onClick(View v) {
-                                String uID = getRef(position).getKey();
+                            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                String username = snapshot.getKey();
+                                for(DataSnapshot dataChild : snapshot.getChildren()){
+                                    String idOrder = dataChild.getKey();
+                                    for(DataSnapshot dataSnapshot : dataChild.getChildren()){
+                                        if (dataSnapshot.getKey().equals("totalAmount")) {
+                                            totalAmount = Objects.requireNonNull(dataSnapshot.getValue()).toString();
+                                            int priceNew = Integer.parseInt(totalAmount);
+                                            resultTotalAmount += priceNew;
+                                        } else if (dataSnapshot.getKey().equals("date")) {
+                                            date = Objects.requireNonNull(dataSnapshot.getValue()).toString();
+                                        } else if (dataSnapshot.getKey().equals("time")) {
+                                            time = Objects.requireNonNull(dataSnapshot.getValue()).toString();
+                                        }
+                                    }
+                                }
+                                holder.order_key.setText(username);
+                                holder.order_total_price.setText(String.valueOf(resultTotalAmount)+"đ");
+                                holder.order_date_time.setText(date+time);
+                                holder.show_order_products.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent(AdminOrderActivity.this, AdminOrderProductsDetailActivity.class);
+                                        intent.putExtra("uid", username);
+                                        startActivity(intent);
+                                    }
+                                });
+                            }
 
-                                Intent intent = new Intent(AdminOrderActivity.this, AdminOrderProductsDetailActivity.class);
-                                intent.putExtra("uid", uID);
-                                startActivity(intent);
+                            @Override
+                            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
                             }
                         });
+
+//                        holder.show_order_products.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                String uID = getRef(position).getKey();
+//                                Intent intent = new Intent(AdminOrderActivity.this, AdminOrderProductsDetailActivity.class);
+//                                intent.putExtra("uid", uID);
+//                                startActivity(intent);
+//                            }
+//                        });
 
                         holder.itemView.setOnClickListener(new View.OnClickListener() {
                             @Override

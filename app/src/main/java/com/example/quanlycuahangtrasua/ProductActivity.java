@@ -12,9 +12,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.SearchView;
 
 import com.example.quanlycuahangtrasua.Model.Products;
+import com.example.quanlycuahangtrasua.Model.Singleton.ProductTypeSingleton;
 import com.example.quanlycuahangtrasua.ViewHolder.ProductViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -27,19 +30,78 @@ public class ProductActivity extends AppCompatActivity {
     private DatabaseReference productsManagementRef;
     private RecyclerView recyclerViewProductListManagement;
     RecyclerView.LayoutManager layoutManager;
-    private String type = "";
-
+    private String type = "",productType;
+    private RadioGroup radioGroup;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
 
-        productsManagementRef = FirebaseDatabase.getInstance().getReference().child("Products");
+        radioGroup = findViewById(R.id.radioGroup);
         recyclerViewProductListManagement = findViewById(R.id.rvProductListManagement);
         recyclerViewProductListManagement.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerViewProductListManagement.setLayoutManager(layoutManager);
 
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton selectedRadioButton = findViewById(checkedId);
+                if(selectedRadioButton != null){
+                    productType = selectedRadioButton.getText().toString();
+                    ProductTypeSingleton.getInstance().setProductType(productType);// Singleton
+                    productsManagementRef = FirebaseDatabase.getInstance().getReference().child("Products").child(productType);
+                    FirebaseRecyclerOptions<Products> options = new FirebaseRecyclerOptions.Builder<Products>()
+                            .setQuery(productsManagementRef, Products.class).build();
+
+                    FirebaseRecyclerAdapter<Products, ProductViewHolder> adapter = new FirebaseRecyclerAdapter<Products, ProductViewHolder>(options) {
+                        @Override
+                        protected void onBindViewHolder(@NonNull ProductViewHolder holder, int position, @NonNull Products model) {
+                            String originalName = model.getProductName();
+                            if (originalName != null) {
+                                int maxLength = 20;
+                                if (originalName.length() > maxLength) {
+                                    String truncatedName = originalName.substring(0, maxLength - 3) + "...";
+                                    holder.productName.setText(truncatedName);
+                                } else {
+                                    holder.productName.setText(originalName);
+                                }
+                            }
+
+                            holder.productPrice.setText(model.getPrice() + "đ");
+                            holder.productIngre.setText(model.getIngredient());
+                            Picasso.get().load(model.getImage()).into(holder.productImage);
+
+                            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    if (type.equals("Admin")){
+                                        Intent intent = new Intent(ProductActivity.this, AdminMaintainActivity.class);
+                                        intent.putExtra("productId", model.getProductId());
+                                        startActivity(intent);
+                                    }
+                                    else {
+                                        Intent intent = new Intent(ProductActivity.this, ProductDetailActivity.class);
+                                        intent.putExtra("productId", model.getProductId());
+                                        startActivity(intent);
+                                    }
+                                }
+                            });
+                        }
+
+                        @NonNull
+                        @Override
+                        public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_layout, parent, false);
+                            return new ProductViewHolder(view);
+                        }
+                    };
+
+                    recyclerViewProductListManagement.setAdapter(adapter);
+                    adapter.startListening();
+                }
+            }
+        });
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         if (bundle != null){
@@ -51,53 +113,62 @@ public class ProductActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseRecyclerOptions<Products> options = new FirebaseRecyclerOptions.Builder<Products>()
-                .setQuery(productsManagementRef, Products.class).build();
-
-        FirebaseRecyclerAdapter<Products, ProductViewHolder> adapter = new FirebaseRecyclerAdapter<Products, ProductViewHolder>(options) {
-            @Override
-            protected void onBindViewHolder(@NonNull ProductViewHolder holder, int position, @NonNull Products model) {
-                String originalName = model.getProductName();
-                int maxLength = 20;
-
-                if (originalName.length() > maxLength) {
-                    String truncatedName = originalName.substring(0, maxLength - 3) + "...";
-                    holder.productName.setText(truncatedName);
-                } else {
-                    holder.productName.setText(originalName);
-                }
-
-                holder.productPrice.setText(model.getPrice() + "đ");
-                holder.productIngre.setText(model.getIngredient());
-                Picasso.get().load(model.getImage()).into(holder.productImage);
-
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (type.equals("Admin")){
-                            Intent intent = new Intent(ProductActivity.this, AdminMaintainActivity.class);
-                            intent.putExtra("productId", model.getProductId());
-                            startActivity(intent);
-                        }
-                        else {
-                            Intent intent = new Intent(ProductActivity.this, ProductDetailActivity.class);
-                            intent.putExtra("productId", model.getProductId());
-                            startActivity(intent);
-                        }
-                    }
-                });
-            }
-
-            @NonNull
-            @Override
-            public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_layout, parent, false);
-                return new ProductViewHolder(view);
-            }
-        };
-
-        recyclerViewProductListManagement.setAdapter(adapter);
-        adapter.startListening();
+//        FirebaseRecyclerOptions<Products> options = new FirebaseRecyclerOptions.Builder<Products>()
+//                .setQuery(productsManagementRef, Products.class).build();
+//
+//        FirebaseRecyclerAdapter<Products, ProductViewHolder> adapter = new FirebaseRecyclerAdapter<Products, ProductViewHolder>(options) {
+//            @Override
+//            protected void onBindViewHolder(@NonNull ProductViewHolder holder, int position, @NonNull Products model) {
+//                String originalName = model.getProductName();
+//////                int maxLength = 20;
+////
+////                if (originalName.length() > maxLength) {
+////                    String truncatedName = originalName.substring(0, maxLength - 3) + "...";
+////                    holder.productName.setText(truncatedName);
+////                } else {
+////                    holder.productName.setText(originalName);
+////                }
+//                if (originalName != null) {
+//                    int maxLength = 20;
+//                    if (originalName.length() > maxLength) {
+//                        String truncatedName = originalName.substring(0, maxLength - 3) + "...";
+//                        holder.productName.setText(truncatedName);
+//                    } else {
+//                        holder.productName.setText(originalName);
+//                    }
+//                }
+//
+//                holder.productPrice.setText(model.getPrice() + "đ");
+//                holder.productIngre.setText(model.getIngredient());
+//                Picasso.get().load(model.getImage()).into(holder.productImage);
+//
+//                holder.itemView.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        if (type.equals("Admin")){
+//                            Intent intent = new Intent(ProductActivity.this, AdminMaintainActivity.class);
+//                            intent.putExtra("productId", model.getProductId());
+//                            startActivity(intent);
+//                        }
+//                        else {
+//                            Intent intent = new Intent(ProductActivity.this, ProductDetailActivity.class);
+//                            intent.putExtra("productId", model.getProductId());
+//                            startActivity(intent);
+//                        }
+//                    }
+//                });
+//            }
+//
+//            @NonNull
+//            @Override
+//            public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+//                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_layout, parent, false);
+//                return new ProductViewHolder(view);
+//            }
+//        };
+//
+//        recyclerViewProductListManagement.setAdapter(adapter);
+//        adapter.startListening();
     }
 
     @Override

@@ -3,6 +3,9 @@ package com.example.quanlycuahangtrasua.Model;
 public class Products {
     private String productId, productName, ingredient, price, image ;
 
+    // trà sữa
+    // trà trái cây
+    // coffee
     public Products() {
     }
 

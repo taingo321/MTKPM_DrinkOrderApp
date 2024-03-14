@@ -73,9 +73,9 @@ public class CartActivity extends AppCompatActivity {
         FirebaseRecyclerAdapter<Cart, CartViewHolder> adapter = new FirebaseRecyclerAdapter<Cart, CartViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull CartViewHolder holder, int position, @NonNull Cart model) {
-                holder.product_Name_Cart.setText(model.getProductName());
-                holder.product_Quantity_Cart.setText("x" + model.getQuantity());
-                holder.product_Price_Cart.setText(model.getPrice() + "đ");
+                holder.cartOrderDayOrName.setText(model.getProductName());
+                holder.cartOrderTimeOrQuality.setText("x" + model.getQuantity());
+                holder.orderTotalPrice.setText(model.getPrice() + "đ");
 
                 int oneTypeProductPrice = ((Integer.valueOf(model.getPrice()))) * Integer.valueOf(model.getQuantity());
                 overTotalPrice = overTotalPrice + oneTypeProductPrice;

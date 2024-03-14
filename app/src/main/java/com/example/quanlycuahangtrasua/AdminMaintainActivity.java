@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.quanlycuahangtrasua.Model.Singleton.ProductTypeSingleton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -29,16 +30,18 @@ public class AdminMaintainActivity extends AppCompatActivity {
     private Button btnApllayChange, btnDelete;
     private EditText edtProductNameMaintain, edtProductPriceMaintain, edtProductIngredientMaintain;
     private ImageView imageViewProductImageMaintain;
-    private String productId = "";
+    private String productId = "",typeProduct;
     private DatabaseReference productsRef;
-
+    private ProductTypeSingleton productTypeSingleton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_maintain);
 
         productId = getIntent().getStringExtra("productId");
-        productsRef = FirebaseDatabase.getInstance().getReference().child("Products").child(productId);
+        productTypeSingleton = ProductTypeSingleton.getInstance();
+        typeProduct = productTypeSingleton.getProductType();
+        productsRef = FirebaseDatabase.getInstance().getReference().child("Products").child(typeProduct).child(productId);
 
         btnApllayChange = findViewById(R.id.apply_change_button);
         btnDelete = findViewById(R.id.delete_button);

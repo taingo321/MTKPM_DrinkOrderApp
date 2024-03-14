@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.quanlycuahangtrasua.Model.Products;
+import com.example.quanlycuahangtrasua.Model.Singleton.ProductTypeSingleton;
 import com.example.quanlycuahangtrasua.Prevalent.Prevalent;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -137,7 +138,8 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
     private void getProductDetails(String productID) {
-        DatabaseReference productsRef = FirebaseDatabase.getInstance().getReference().child("Products");
+        String productType = ProductTypeSingleton.getInstance().getProductType();
+        DatabaseReference productsRef = FirebaseDatabase.getInstance().getReference().child("Products").child(productType);
 
         productsRef.child(productID).addValueEventListener(new ValueEventListener() {
             @Override

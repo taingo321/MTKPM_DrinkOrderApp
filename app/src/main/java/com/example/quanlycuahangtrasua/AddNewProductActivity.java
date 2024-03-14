@@ -11,8 +11,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.quanlycuahangtrasua.Model.FactoryMethod.CoffeeFactory;
+import com.example.quanlycuahangtrasua.Model.FactoryMethod.FruitTeaFactory;
+import com.example.quanlycuahangtrasua.Model.FactoryMethod.IProduct;
+import com.example.quanlycuahangtrasua.Model.FactoryMethod.MilkTeaFactory;
+import com.example.quanlycuahangtrasua.Model.FactoryMethod.ProductFactory;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -28,14 +35,18 @@ import java.util.HashMap;
 
 public class AddNewProductActivity extends AppCompatActivity {
     private String productName, productIngredient, productPrice;
-    private Button btnAddNewProduct;
     private ImageView imageViewSelectProductImage;
     private EditText editTextProductName, editTextProductIngredient, editTextProductPrice;
     private  static final int GALLERY_PICK = 1;
     private Uri uri;
-    private String productKey, downloadImageUrl;
+    private String productKey;
+    private String downloadImageUrl;
     private StorageReference productImagesRef;
-    private DatabaseReference productsRef;
+    private DatabaseReference productTypeRef;
+    private RadioGroup radioProductTypeGroup;
+    private RadioButton radioCoffee;
+    private RadioButton radioMilkTea;
+    private RadioButton radioFruitTea;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,13 +54,16 @@ public class AddNewProductActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_new_product);
 
         productImagesRef = FirebaseStorage.getInstance().getReference().child("Product Images");
-        productsRef = FirebaseDatabase.getInstance().getReference().child("Products");
 
-        btnAddNewProduct = findViewById(R.id.add_new_product);
+        Button btnAddNewProduct = findViewById(R.id.add_new_product);
         imageViewSelectProductImage = findViewById(R.id.select_product_image);
         editTextProductName = findViewById(R.id.product_name);
         editTextProductIngredient = findViewById(R.id.product_ingre);
         editTextProductPrice = findViewById(R.id.product_price);
+        radioProductTypeGroup = findViewById(R.id.product_type_group);
+//        radioCoffee = findViewById(R.id.radio_coffee);
+//        radioMilkTea = findViewById(R.id.radio_milk_tea);
+//        radioFruitTea = findViewById(R.id.radio_fruit_tea);
 
         imageViewSelectProductImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +103,7 @@ public class AddNewProductActivity extends AppCompatActivity {
         productPrice = editTextProductPrice.getText().toString();
         productName = editTextProductName.getText().toString();
 
+
         if (uri == null){
             Toast.makeText(this, "Vui lòng chọn hình ảnh...", Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(productName)) {
@@ -104,7 +119,6 @@ public class AddNewProductActivity extends AppCompatActivity {
 
     private void StoreProductInformation() {
 
-        productKey = productsRef.push().getKey();
 
         StorageReference filePath = productImagesRef.child(uri.getLastPathSegment() + productKey + ".jpg");
 
@@ -149,24 +163,44 @@ public class AddNewProductActivity extends AppCompatActivity {
     }
 
     private void SaveProductInfoToDatabase() {
-        HashMap<String, Object> productMap = new HashMap<>();
-        productMap.put("productId", productKey);
-        productMap.put("productName", productName);
-        productMap.put("ingredient", productIngredient);
-        productMap.put("image", downloadImageUrl);
-        productMap.put("price", productPrice);
+        int selectedRadioButtonId = radioProductTypeGroup.getCheckedRadioButtonId();
+        RadioButton selectedRadioButton = findViewById(selectedRadioButtonId);
+        String productType = selectedRadioButton.getText().toString();
 
-        productsRef.child(productKey).updateChildren(productMap)
+        productTypeRef = FirebaseDatabase.getInstance().getReference().child("Products").child(productType);
+        productKey = productTypeRef.push().getKey();
+        ProductFactory factory = null;
+        if(productType.equals("Coffee")){
+            factory = new CoffeeFactory();
+        }else if(productType.equals("Fruit Tea")){
+            factory = new FruitTeaFactory();
+        }else if(productType.equals("Milk Tea")){
+            factory = new MilkTeaFactory();
+        }else{
+            Toast.makeText(AddNewProductActivity.this, "Lỗi: Loại sản phẩm không hợp lệ", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        IProduct product = factory.createProduct(productKey, productName, productIngredient, productPrice, downloadImageUrl);
+//        HashMap<String, Object> productMap = new HashMap<>();
+//        productMap.put("productId", productKey);
+//        productMap.put("productName", productName);
+//        productMap.put("ingredient", productIngredient);
+//        productMap.put("image", downloadImageUrl);
+//        productMap.put("price", productPrice);
+
+
+        productTypeRef.child(productKey).setValue(product)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
+                            Toast.makeText(AddNewProductActivity.this, "Thêm sản phẩm mới thành công", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(AddNewProductActivity.this, AdminActivity.class);
                             startActivity(intent);
-                            Toast.makeText(AddNewProductActivity.this, "Thêm sản phẩm mới thành công", Toast.LENGTH_SHORT).show();
                         }else {
-                            String message = task.getException().toString();
-                            Toast.makeText(AddNewProductActivity.this, "Lỗi: them " + message, Toast.LENGTH_SHORT).show();
+                            String message = task.getException().getMessage();
+                            Toast.makeText(AddNewProductActivity.this, "Lỗi: thêm " + message, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

@@ -35,6 +35,10 @@
             android:exported="false"
             android:label="Trang quản lý hóa đơn" />
         <activity
+            android:name=".AdminOrderDetailActivity"
+            android:exported="false"
+            android:label="Trang quản chi tiết từng món hàng trong đơn hàng" />
+        <activity
             android:name=".AdminOrderProductsDetailActivity"
             android:exported="false"
             android:label="Trang chi tiết hóa đơn" />

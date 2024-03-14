@@ -16,11 +16,47 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"/>
 
+    <RadioGroup
+        android:id="@+id/product_type_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/select_product_image"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="45dp"
+        android:layout_marginRight="45dp">
+
+        <RadioButton
+            android:id="@+id/radio_coffee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Coffee"
+            android:checked="true"
+            android:padding="10dp"/>
+
+        <RadioButton
+            android:id="@+id/radio_milk_tea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Milk Tea" />
+
+        <RadioButton
+            android:id="@+id/radio_fruit_tea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fruit Tea"
+            android:padding="10dp"/>
+
+    </RadioGroup>
+
     <EditText
         android:id="@+id/product_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/select_product_image"
+        android:layout_below="@id/product_type_group"
         android:inputType="textMultiLine"
         android:layout_marginTop="20dp"
         android:padding="20dp"
