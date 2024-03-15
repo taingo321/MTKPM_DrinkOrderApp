@@ -1,7 +1,6 @@
 # Đồ án app bán trà sữa
 ## Mục đích dự án
-- Ứng dụng giúp cho nhân viên đặt
-21DH111642 gọi các món nước cho khách hàng
+- Ứng dụng giúp cho nhân viên đặt, gọi các món nước cho khách hàng
 - Cho phép người quản lý kiểm soát dữ liệu sản phẩm
 
 ## Chức năng của phần mềm
