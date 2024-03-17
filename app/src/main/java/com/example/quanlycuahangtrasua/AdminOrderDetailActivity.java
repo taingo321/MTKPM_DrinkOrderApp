@@ -31,7 +31,6 @@ import java.util.List;
 import java.util.Map;
 
 public class AdminOrderDetailActivity extends AppCompatActivity {
-    private String orderId,username,productName,price,quantity,productId;
     private RecyclerView recyclerViewProductsList;
     RecyclerView.LayoutManager layoutManager;
     private DatabaseReference orderRef;
@@ -47,50 +46,31 @@ public class AdminOrderDetailActivity extends AppCompatActivity {
         recyclerViewProductsList = findViewById(R.id.products_list);
         layoutManager = new LinearLayoutManager(this);
         recyclerViewProductsList.setLayoutManager(layoutManager);
-        orderId = getIntent().getStringExtra("orderId");
-        orderRef = FirebaseDatabase.getInstance().getReference().child("Orders");
-        orderRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                username = snapshot.getKey();
-                if(username != null){
-                    Log.d("username",username);
-                    setupRecyclerView();
-                }else {
-                    Log.d("username","Username is null");
-                }
+
+        // Get intent
+        Intent intent = getIntent();
+        if(intent != null){
+            Bundle bundle = intent.getExtras();
+            if(bundle != null){
+                String username = bundle.getString("username");
+                String orderId = bundle.getString("orderId");
+                orderRef = FirebaseDatabase.getInstance().getReference().child("Orders").child(username).child(orderId);
+                setupRecyclerView();
             }
+        }
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
     private void setupRecyclerView(){
-        DatabaseReference orderProductsRef = orderRef.child(username).child(orderId).child("products");
+        DatabaseReference orderProductsRef = orderRef.child("products");
         FirebaseRecyclerOptions<Cart> options = new FirebaseRecyclerOptions.Builder<Cart>()
                 .setQuery(orderProductsRef, Cart.class)
                 .build();
         FirebaseRecyclerAdapter<Cart, CartViewHolder> adapter = new FirebaseRecyclerAdapter<Cart, CartViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull CartViewHolder holder, int position, @NonNull Cart model) {
-
+                String uid = getRef(position).getKey();
+                Log.d("uid1",uid);
                 holder.cartOrderDayOrName.setText(model.getProductName());
                 holder.orderTotalPrice.setText(model.getQuantity()+"x"+model.getPrice() + "đ");
                 int price = Integer.parseInt(model.getPrice());

@@ -15,11 +15,11 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.example.quanlycuahangtrasua.Model.FactoryMethod.CoffeeFactory;
-import com.example.quanlycuahangtrasua.Model.FactoryMethod.FruitTeaFactory;
-import com.example.quanlycuahangtrasua.Model.FactoryMethod.IProduct;
-import com.example.quanlycuahangtrasua.Model.FactoryMethod.MilkTeaFactory;
-import com.example.quanlycuahangtrasua.Model.FactoryMethod.ProductFactory;
+import com.example.quanlycuahangtrasua.DesignPattern.FactoryMethod.CoffeeFactory;
+import com.example.quanlycuahangtrasua.DesignPattern.FactoryMethod.FruitTeaFactory;
+import com.example.quanlycuahangtrasua.DesignPattern.FactoryMethod.IProduct;
+import com.example.quanlycuahangtrasua.DesignPattern.FactoryMethod.MilkTeaFactory;
+import com.example.quanlycuahangtrasua.DesignPattern.FactoryMethod.ProductFactory;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -30,8 +30,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
-import java.util.HashMap;
 
 public class AddNewProductActivity extends AppCompatActivity {
     private String productName, productIngredient, productPrice;

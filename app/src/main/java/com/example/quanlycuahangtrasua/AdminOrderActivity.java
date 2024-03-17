@@ -26,6 +26,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
@@ -34,7 +35,6 @@ public class AdminOrderActivity extends AppCompatActivity {
     private RecyclerView recyclerViewOrdersList;
     private DatabaseReference ordersRef;
     private String totalAmount,date,time;
-    private int resultTotalAmount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,69 +60,43 @@ public class AdminOrderActivity extends AppCompatActivity {
                 new FirebaseRecyclerAdapter<AdminOrder, AdminOrdersViewHolder>(options) {
                     @Override
                     protected void onBindViewHolder(@NonNull AdminOrdersViewHolder holder, int position, @NonNull AdminOrder model) {
-
-
-                        ordersRef.addChildEventListener(new ChildEventListener() {
+                        String uid = getRef(position).getKey();
+                        String username = uid;
+                        int resultTotalAmount = 0;
+                        DatabaseReference orderRef = ordersRef.child(username);
+                        orderRef.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
-                            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                                String username = snapshot.getKey();
-                                for(DataSnapshot dataChild : snapshot.getChildren()){
-                                    String idOrder = dataChild.getKey();
-                                    for(DataSnapshot dataSnapshot : dataChild.getChildren()){
-                                        if (dataSnapshot.getKey().equals("totalAmount")) {
-                                            totalAmount = Objects.requireNonNull(dataSnapshot.getValue()).toString();
-                                            int priceNew = Integer.parseInt(totalAmount);
-                                            resultTotalAmount += priceNew;
-                                        } else if (dataSnapshot.getKey().equals("date")) {
-                                            date = Objects.requireNonNull(dataSnapshot.getValue()).toString();
-                                        } else if (dataSnapshot.getKey().equals("time")) {
-                                            time = Objects.requireNonNull(dataSnapshot.getValue()).toString();
-                                        }
-                                    }
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for(DataSnapshot orderSnapshot: snapshot.getChildren()){
+//                                    String orderId = orderSnapshot.getKey();
+
+                                    AdminOrder adminOrder = orderSnapshot.getValue(AdminOrder.class);
+
+                                    holder.order_key.setText(username);
+                                    holder.order_total_price.setText(adminOrder.getTotalAmount() + "đ");
+                                    holder.order_date_time.setText(adminOrder.getDate() + " " + adminOrder.getTime());
+
                                 }
-                                holder.order_key.setText(username);
-                                holder.order_total_price.setText(String.valueOf(resultTotalAmount)+"đ");
-                                holder.order_date_time.setText(date+time);
-                                holder.show_order_products.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent intent = new Intent(AdminOrderActivity.this, AdminOrderProductsDetailActivity.class);
-                                        intent.putExtra("uid", username);
-                                        startActivity(intent);
-                                    }
-                                });
                             }
 
-                            @Override
-                            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                            }
-
-                            @Override
-                            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-                            }
-
-                            @Override
-                            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                            }
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
-
+                                Log.e("AdminOrderActivity", "onCancelled", error.toException());
                             }
                         });
-
-//                        holder.show_order_products.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                                String uID = getRef(position).getKey();
-//                                Intent intent = new Intent(AdminOrderActivity.this, AdminOrderProductsDetailActivity.class);
-//                                intent.putExtra("uid", uID);
-//                                startActivity(intent);
-//                            }
-//                        });
+                        Log.d("uid",username);
+                        holder.show_order_products.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(AdminOrderActivity.this, AdminOrderProductsDetailActivity.class);
+                                intent.putExtra("uid", username);
+                                startActivity(intent);
+                            }
+                        });
+//                        holder.order_key.setText(username);
+//                        holder.order_total_price.setText(String.valueOf(resultTotalAmount)+"đ");
+//                        holder.order_date_time.setText(date+time);
 
                         holder.itemView.setOnClickListener(new View.OnClickListener() {
                             @Override

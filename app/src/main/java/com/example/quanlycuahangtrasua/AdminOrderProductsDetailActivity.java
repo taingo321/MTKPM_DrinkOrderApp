@@ -2,6 +2,7 @@ package com.example.quanlycuahangtrasua;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,13 +50,15 @@ public class AdminOrderProductsDetailActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
+        Log.d("userId",userId);
         FirebaseRecyclerOptions<Orders> options = new FirebaseRecyclerOptions.Builder<Orders>()
                 .setQuery(orderListRef, Orders.class)
                 .build();
         FirebaseRecyclerAdapter<Orders, CartViewHolder> adapter = new FirebaseRecyclerAdapter<Orders, CartViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull CartViewHolder holder, int position, @NonNull Orders model) {
+                String orderId = getRef(position).getKey();
+                Log.d("orderId",orderId);
                 holder.cartOrderDayOrName.setText(model.getDate());
 //                holder.product_Quantity_Cart.setText("x" + model.getQuantity());
                 holder.cartOrderTimeOrQuality.setText(model.getTime());
@@ -65,13 +68,18 @@ public class AdminOrderProductsDetailActivity extends AppCompatActivity {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String orderId = model.getOid();
+                        Log.d("bundleUsername",userId);
+                        Log.d("bundleOrderId",orderId);
                         Intent intent = new Intent(AdminOrderProductsDetailActivity.this,AdminOrderDetailActivity.class);
-                        intent.putExtra("orderId", orderId);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("username",userId);
+                        bundle.putString("orderId", orderId);
+                        intent.putExtras(bundle);
                         startActivity(intent);
                     }
                 });
             }
+
 
             @NonNull
             @Override

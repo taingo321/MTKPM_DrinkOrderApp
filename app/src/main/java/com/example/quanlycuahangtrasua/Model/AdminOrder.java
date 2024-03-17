@@ -6,6 +6,7 @@ public class AdminOrder {
     public AdminOrder() {
     }
 
+
     public AdminOrder(String note, String date, String time, String totalAmount, String oid) {
         this.note = note;
         this.date = date;

@@ -14,14 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.SearchView;
 
 import com.example.quanlycuahangtrasua.Model.Products;
-import com.example.quanlycuahangtrasua.Model.Singleton.ProductTypeSingleton;
+import com.example.quanlycuahangtrasua.DesignPattern.Singleton.ProductTypeSingleton;
 import com.example.quanlycuahangtrasua.ViewHolder.ProductViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
