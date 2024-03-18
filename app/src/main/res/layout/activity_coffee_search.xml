@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CoffeeSearchActivity">
+
+    <RelativeLayout
+        android:id="@+id/coffee_search"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/teal_200"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
+
+        <EditText
+            android:id="@+id/search_product_name"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:hint="Tên sản phẩm"
+            android:textColorHint="@android:color/white" />
+
+        <Button
+            android:id="@+id/coffee_search_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tìm kiếm"
+            android:layout_toRightOf="@+id/search_product_name" />
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/coffee_search_list"
+        android:layout_width="match_parent"
+        android:layout_height="684dp"
+        android:padding="14dp"
+        android:layout_below="@+id/coffee_search"
+        android:layout_marginTop="-3dp" />
+</RelativeLayout>
