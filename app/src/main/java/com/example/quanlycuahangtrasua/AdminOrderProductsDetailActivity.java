@@ -18,11 +18,18 @@ import com.example.quanlycuahangtrasua.Model.Products;
 import com.example.quanlycuahangtrasua.ViewHolder.CartViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class AdminOrderProductsDetailActivity extends AppCompatActivity {
 
@@ -40,17 +47,15 @@ public class AdminOrderProductsDetailActivity extends AppCompatActivity {
         recyclerViewProductsList = findViewById(R.id.products_list);
         layoutManager = new LinearLayoutManager(this);
         recyclerViewProductsList.setLayoutManager(layoutManager);
-
-//        cartListRef = FirebaseDatabase.getInstance().getReference()
-//                .child("Cart List").child("Admin View").child(userId).child("Products");
         orderListRef = FirebaseDatabase.getInstance().getReference().child("Orders")
                 .child(userId);
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d("userId",userId);
+        Log.d("userId", userId);
         FirebaseRecyclerOptions<Orders> options = new FirebaseRecyclerOptions.Builder<Orders>()
                 .setQuery(orderListRef, Orders.class)
                 .build();
@@ -58,7 +63,7 @@ public class AdminOrderProductsDetailActivity extends AppCompatActivity {
             @Override
             protected void onBindViewHolder(@NonNull CartViewHolder holder, int position, @NonNull Orders model) {
                 String orderId = getRef(position).getKey();
-                Log.d("orderId",orderId);
+                Log.d("orderId", orderId);
                 holder.cartOrderDayOrName.setText(model.getDate());
 //                holder.product_Quantity_Cart.setText("x" + model.getQuantity());
                 holder.cartOrderTimeOrQuality.setText(model.getTime());
@@ -68,11 +73,11 @@ public class AdminOrderProductsDetailActivity extends AppCompatActivity {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Log.d("bundleUsername",userId);
-                        Log.d("bundleOrderId",orderId);
-                        Intent intent = new Intent(AdminOrderProductsDetailActivity.this,AdminOrderDetailActivity.class);
+                        Log.d("bundleUsername", userId);
+                        Log.d("bundleOrderId", orderId);
+                        Intent intent = new Intent(AdminOrderProductsDetailActivity.this, AdminOrderDetailActivity.class);
                         Bundle bundle = new Bundle();
-                        bundle.putString("username",userId);
+                        bundle.putString("username", userId);
                         bundle.putString("orderId", orderId);
                         intent.putExtras(bundle);
                         startActivity(intent);
@@ -92,5 +97,10 @@ public class AdminOrderProductsDetailActivity extends AppCompatActivity {
 
         recyclerViewProductsList.setAdapter(adapter);
         adapter.startListening();
+
+
+
+
     }
 }
+

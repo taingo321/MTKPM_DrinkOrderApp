@@ -1,6 +1,8 @@
 package com.example.quanlycuahangtrasua.Model;
 
-public class Products {
+import com.example.quanlycuahangtrasua.DesignPattern.Composite.Interface.Composite;
+
+public class Products implements Composite {
     private String productId, productName, ingredient, price, image ;
 
     // trà sữa
@@ -55,5 +57,11 @@ public class Products {
     public void setImage(String image) {
         this.image = image;
     }
+
+    @Override
+    public void display() {
+    }
+
+
 }
 
