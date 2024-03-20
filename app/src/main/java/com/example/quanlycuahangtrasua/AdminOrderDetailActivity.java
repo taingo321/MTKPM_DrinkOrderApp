@@ -77,8 +77,10 @@ public class AdminOrderDetailActivity extends AppCompatActivity {
                 int quantity = Integer.parseInt(model.getQuantity());
                 int productTotalPrice  = price * quantity;
                 holder.cartOrderTimeOrQuality.setText(productTotalPrice + "đ");
+                holder.status.setText(model.getStatus());
                 totalPrice += productTotalPrice;
                 textViewTotalPrice.setText("Tổng tiền: " + String.valueOf(totalPrice) + "đ");
+
             }
 
             @NonNull

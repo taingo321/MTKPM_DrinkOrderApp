@@ -10,7 +10,7 @@ import com.example.quanlycuahangtrasua.Interface.ItemClickListener;
 import com.example.quanlycuahangtrasua.R;
 
 public class CartViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-    public TextView cartOrderDayOrName, cartOrderTimeOrQuality, orderTotalPrice;
+    public TextView cartOrderDayOrName, cartOrderTimeOrQuality, orderTotalPrice, status;
     private ItemClickListener itemClickListener;
 
     public CartViewHolder(@NonNull View itemView) {
@@ -19,6 +19,7 @@ public class CartViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         cartOrderDayOrName = (TextView)itemView.findViewById(R.id.order_day_or_name);
         orderTotalPrice = (TextView)itemView.findViewById(R.id.order_total);
         cartOrderTimeOrQuality = (TextView)itemView.findViewById(R.id.order_time_or_quality);
+        status = (TextView)itemView.findViewById(R.id.status);
     }
 
     @Override

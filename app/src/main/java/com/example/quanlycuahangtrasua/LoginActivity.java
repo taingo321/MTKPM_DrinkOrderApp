@@ -25,7 +25,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
-
     private TextInputEditText inputEditTextUsername, inputEditTextPassword;
     private TextInputLayout inputLayoutUsername,inputLayoutPassword;
     private ProgressDialog progressBar;
@@ -39,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
 
         compatButtonLogin = findViewById(R.id.login_button);
         //ChangeToReg = findViewById(R.id.tvChangeToReg);
@@ -91,6 +91,9 @@ public class LoginActivity extends AppCompatActivity {
         });*/
 
     }
+
+
+
 
     private class UsernameTextWatcher implements TextWatcher {
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -162,7 +165,6 @@ public class LoginActivity extends AppCompatActivity {
             progressBar.setMessage("Vui lòng chờ");
             progressBar.setCanceledOnTouchOutside(false);
             progressBar.show();
-
             AllowAccessToAccount(username, password);
         }
     }
@@ -177,13 +179,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.child(parentName).child(username).exists()){
                     Users usersData = snapshot.child(parentName).child(username).getValue(Users.class);
-
                     if (usersData.getUsername().equals(username)){
                         if (usersData.getPassword().equals(password)){
                             if (parentName.equals("Admins")){
                                 Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                                 progressBar.dismiss();
-
                                 Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
                                 Prevalent.currentOnlineUser = usersData;
                                 startActivity(intent);
@@ -191,10 +191,10 @@ public class LoginActivity extends AppCompatActivity {
                             else if (parentName.equals("Users")){
                                 Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                                 progressBar.dismiss();
-
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 Prevalent.currentOnlineUser = usersData;
                                 startActivity(intent);
+
                             }
 
                         }
@@ -209,6 +209,8 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Tài khoản " + username + " không tồn tại", Toast.LENGTH_SHORT).show();
                     progressBar.dismiss();
                 }
+
+
             }
 
             @Override
@@ -220,5 +222,6 @@ public class LoginActivity extends AppCompatActivity {
     private boolean areAllFieldsValid() {
         return isValidUsername && isValidPassword ;
     }
+
 
 }

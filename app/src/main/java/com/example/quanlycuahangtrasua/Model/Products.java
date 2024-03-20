@@ -1,8 +1,8 @@
 package com.example.quanlycuahangtrasua.Model;
 
-import com.example.quanlycuahangtrasua.DesignPattern.Composite.Interface.Composite;
+import com.example.quanlycuahangtrasua.DesignPattern.Composite.Interface.IComposite;
 
-public class Products implements Composite {
+public class Products implements IComposite {
     private String productId, productName, ingredient, price, image ;
 
     // trà sữa
