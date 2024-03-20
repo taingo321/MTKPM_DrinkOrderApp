@@ -1,5 +1,7 @@
 package com.example.quanlycuahangtrasua.Model;
 
+import com.google.firebase.database.DataSnapshot;
+
 public class Cart {
     private String productId, productName, price, quantity;
 
@@ -44,4 +46,6 @@ public class Cart {
     public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
+
+
 }

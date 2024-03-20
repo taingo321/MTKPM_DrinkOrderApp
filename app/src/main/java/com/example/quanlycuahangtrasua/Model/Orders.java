@@ -1,16 +1,19 @@
 package com.example.quanlycuahangtrasua.Model;
 
+import com.example.quanlycuahangtrasua.DesignPattern.Composite.Interface.Composite;
+import com.google.firebase.database.DataSnapshot;
+
 import java.util.List;
 
-public class Orders {
+public class Orders implements Composite {
     private String oid;
     private String totalAmount;
     private String note;
     private String date;
     private String time;
     private List<Cart> products;
-
-    public Orders() {
+    private DataSnapshot dataSnapshot;
+    public Orders(String productId, int quantity) {
     }
 
     public Orders(String oid, String totalAmount, String note, String date, String time,
@@ -66,8 +69,25 @@ public class Orders {
     public List<Cart> getProducts() {
         return products;
     }
+    public DataSnapshot getDataSnapshot() {
+        return dataSnapshot;
+    }
+
+    public void setDataSnapshot(DataSnapshot dataSnapshot) {
+        this.dataSnapshot = dataSnapshot;
+    }
 
     public void setProducts(List<Cart> products) {
         this.products = products;
     }
+
+    @Override
+    public void display() {
+
+    }
+    public Orders() {
+    }
+
+
+
 }
