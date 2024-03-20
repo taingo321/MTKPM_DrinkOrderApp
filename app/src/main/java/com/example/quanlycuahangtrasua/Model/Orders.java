@@ -1,11 +1,11 @@
 package com.example.quanlycuahangtrasua.Model;
 
-import com.example.quanlycuahangtrasua.DesignPattern.Composite.Interface.Composite;
+import com.example.quanlycuahangtrasua.DesignPattern.Composite.IComposite;
 import com.google.firebase.database.DataSnapshot;
 
 import java.util.List;
 
-public class Orders implements Composite {
+public class Orders implements IComposite {
     private String oid;
     private String totalAmount;
     private String note;
