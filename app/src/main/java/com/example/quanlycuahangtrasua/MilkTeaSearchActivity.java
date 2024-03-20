@@ -21,6 +21,8 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -30,6 +32,7 @@ public class MilkTeaSearchActivity extends AppCompatActivity {
     private Button btnSearch;
     private RecyclerView recyclerViewSearchList;
     private IProductRepository IProductRepository;
+    private String searchInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,32 +49,32 @@ public class MilkTeaSearchActivity extends AppCompatActivity {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String searchInput = edtProductName.getText().toString();
+                searchInput = edtProductName.getText().toString();
                 System.out.println("SearchInput: " + searchInput);
-                searchProducts(searchInput);
+                searchProducts();
             }
         });
     }
 
-    private void searchProducts(String searchInput) {
+    private void searchProducts() {
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                FirebaseRecyclerOptions<Products> options = new FirebaseRecyclerOptions
-                        .Builder<Products>()
-                        .setQuery(snapshot.getRef(), Products.class)
-                        .build();
-                setupRecyclerView(options);
+                Query query = IProductRepository.createQuery(searchInput);
+                setupRecyclerView(query);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         };
-
-        IProductRepository.searchProducts(searchInput, valueEventListener);
+        IProductRepository.searchProducts(searchInput,valueEventListener);
     }
 
-    private void setupRecyclerView(FirebaseRecyclerOptions<Products> options) {
+    private void setupRecyclerView(Query query) {
+        FirebaseRecyclerOptions<Products> options = new FirebaseRecyclerOptions
+                .Builder<Products>()
+                .setQuery(query, Products.class)
+                .build();
         FirebaseRecyclerAdapter<Products, ProductViewHolder> adapter =
                 new FirebaseRecyclerAdapter<Products, ProductViewHolder>(options) {
                     @Override

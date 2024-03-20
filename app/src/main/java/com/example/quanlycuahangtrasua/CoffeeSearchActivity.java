@@ -2,6 +2,7 @@ package com.example.quanlycuahangtrasua;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -30,6 +32,7 @@ public class CoffeeSearchActivity extends AppCompatActivity {
     private Button btnSearch;
     private RecyclerView recyclerViewSearchList;
     private IProductRepository IProductRepository;
+    private String searchInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +49,9 @@ public class CoffeeSearchActivity extends AppCompatActivity {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String searchInput = edtProductName.getText().toString();
+                searchInput = edtProductName.getText().toString();
                 System.out.println("SearchInput: " + searchInput);
-                searchProducts(searchInput);
+                searchProducts();
             }
         });
     }
@@ -92,15 +95,12 @@ public class CoffeeSearchActivity extends AppCompatActivity {
 //        recyclerViewSearchList.setAdapter(adapter);
 //        adapter.startListening();
 //    }
-    private void searchProducts(String searchInput) {
+    private void searchProducts() {
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                FirebaseRecyclerOptions<Products> options = new FirebaseRecyclerOptions.
-                        Builder<Products>()
-                        .setQuery(snapshot.getRef(), Products.class)
-                        .build();
-                setupRecyclerView(options);
+                Query query = IProductRepository.createQuery(searchInput);
+                setupRecyclerView(query);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -109,7 +109,11 @@ public class CoffeeSearchActivity extends AppCompatActivity {
         IProductRepository.searchProducts(searchInput, valueEventListener);
     }
 
-    private void setupRecyclerView(FirebaseRecyclerOptions<Products> options) {
+    private void setupRecyclerView(Query query) {
+        FirebaseRecyclerOptions<Products> options = new FirebaseRecyclerOptions.
+                Builder<Products>()
+                .setQuery(query, Products.class)
+                .build();
         FirebaseRecyclerAdapter<Products, ProductViewHolder> adapter =
                 new FirebaseRecyclerAdapter<Products, ProductViewHolder>(options) {
                     @Override
@@ -118,6 +122,7 @@ public class CoffeeSearchActivity extends AppCompatActivity {
                         holder.productName.setText(model.getProductName());
                         holder.productPrice.setText(model.getPrice() + "đ");
                         Picasso.get().load(model.getImage()).into(holder.productImage);
+                        Log.d("getProductId: ",model.getProductId());
                         holder.itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {

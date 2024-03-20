@@ -15,10 +15,16 @@ public class FruitTeaIProductRepository implements IProductRepository {
 
     @Override
     public void searchProducts(String searchInput, ValueEventListener listener) {
-        Query query = databaseReference
+        Query query = createQuery(searchInput);
+        query.addListenerForSingleValueEvent(listener);
+    }
+
+    @Override
+    public Query createQuery(String searchInput) {
+        Query query = this.databaseReference
                 .orderByChild("productName")
                 .startAt(searchInput)
                 .endAt(searchInput + "\uf8ff");
-        query.addListenerForSingleValueEvent(listener);
+        return query;
     }
 }
