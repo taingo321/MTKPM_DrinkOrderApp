@@ -28,7 +28,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
-
     private Button btnRegister;
     private TextInputEditText inputEditTextRegisterUsername, inputEditTextRegisterPhone, inputEditTextRegisterPassword;
     private TextInputLayout inputLayoutUsername,inputLayoutPhone,inputLayoutPassword;
