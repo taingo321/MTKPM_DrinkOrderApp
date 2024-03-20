@@ -176,7 +176,7 @@ public class ProductActivity extends AppCompatActivity {
         menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(@NonNull MenuItem menuItem) {
-                Intent intent = new Intent(ProductActivity.this, SearchProductActivity.class);
+                Intent intent = new Intent(ProductActivity.this, SearchMenuActivity.class);
                 startActivity(intent);
                 return false;
             }

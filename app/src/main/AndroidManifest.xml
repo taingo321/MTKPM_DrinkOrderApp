@@ -11,52 +11,67 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QuanLyCuaHangTraSua"
         tools:targetApi="31">
+
         <activity
             android:name=".DesignPattern.Composite.InvoiceStaffActivity"
             android:exported="false" />
         <activity
-            android:name=".SearchProductActivity"
-            android:exported="false" />
+            android:name=".FruitTeaSeachActivity"
+            android:exported="false"
+            android:label="Tìm kiếm trà trái cây"/>
+        <activity
+            android:name=".MilkTeaSearchActivity"
+            android:exported="false"
+            android:label="Tìm kiếm trà sữa"/>
+        <activity
+            android:name=".CoffeeSearchActivity"
+            android:exported="false"
+            android:label="Tìm kiếm cà phê"/>
+        <activity
+            android:name=".SearchMenuActivity"
+            android:exported="false"
+            android:label="Tìm kiếm loại sản phẩm" />
         <activity
             android:name=".ConfirmOrderActivity"
             android:exported="false"
-            android:label="Trang xác nhận hóa đơn" />
+            android:label="Xác nhận hóa đơn" />
         <activity
             android:name=".CartActivity"
             android:exported="false"
-            android:label="Trang giỏ hàng" />
+            android:label="Giỏ hàng" />
         <activity
             android:name=".AdminActivity"
             android:exported="false"
-            android:label="Trang quản lý" />
+            android:label="Quản lý" />
         <activity
             android:name=".AdminMaintainActivity"
             android:exported="false"
-            android:label="Trang chỉnh sửa sản phẩm" />
+            android:label="Chỉnh sửa sản phẩm" />
         <activity
             android:name=".AdminOrderActivity"
             android:exported="false"
-            android:label="Trang quản lý hóa đơn" />
+            android:label="Quản lý hóa đơn" />
         <activity
             android:name=".AdminOrderDetailActivity"
             android:exported="false"
-            android:label="Trang quản chi tiết từng món hàng trong đơn hàng" />
+            android:label="Quản lý chi tiết từng món hàng trong đơn hàng" />
         <activity
             android:name=".AdminOrderProductsDetailActivity"
             android:exported="false"
-            android:label="Trang chi tiết hóa đơn" />
+            android:label="Chi tiết hóa đơn" />
         <activity
             android:name=".ProductDetailActivity"
             android:exported="false"
-            android:label="Trang chi tiết sản phẩm" />
+            android:label="Chi tiết sản phẩm" />
         <activity
             android:name=".ProductActivity"
             android:exported="false"
-            android:label="Trang sản phẩm" />
+            android:label="Danh sách sản phẩm" />
         <activity
             android:name=".LoginActivity"
             android:exported="true"
             android:label="Quản lý cửa hàng trà sữa">
+            android:label="Đặt thức uống Nhóm 1">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -73,7 +88,7 @@
         <activity
             android:name=".AddNewProductActivity"
             android:exported="false"
-            android:label="Trang thêm sản phẩm" />
+            android:label="Thêm sản phẩm" />
     </application>
 
 </manifest>

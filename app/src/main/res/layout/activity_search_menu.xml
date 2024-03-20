@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".SearchMenuActivity">
 
     <ScrollView
         android:id="@+id/scrollView1"
@@ -29,40 +29,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
 
-                <ImageView
-                    android:id="@+id/imageViewMainLogo"
-                    android:layout_width="160dp"
-                    android:layout_height="160dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/view"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/view"
-                    app:layout_constraintVertical_bias="0.23000002"
-                    app:srcCompat="@drawable/oval_background_main_logo" />
-
-                <ImageView
-                    android:id="@+id/imageView4"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageViewMainLogo"
-                    app:layout_constraintEnd_toEndOf="@+id/imageViewMainLogo"
-                    app:layout_constraintStart_toStartOf="@+id/imageViewMainLogo"
-                    app:layout_constraintTop_toTopOf="@+id/imageViewMainLogo"
-                    app:srcCompat="@drawable/milktea_logo_2" />
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#E9E7EC"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/view"
-                    app:layout_constraintStart_toStartOf="@+id/view"
-                    app:layout_constraintTop_toTopOf="@+id/imageViewMainLogo"
-                    app:layout_constraintVertical_bias="0.19999999" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="500dp"
@@ -75,36 +41,7 @@
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView">
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="70dp"
-                        android:layout_marginTop="20dp"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="45dp"
-                            android:layout_margin="16dp"
-                            android:layout_weight="0.333"
-                            android:background="@drawable/teal_background"
-                            android:elevation="5dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Chức năng"
-                                android:textAlignment="center"
-                                android:textColor="#1b3646"
-                                android:textSize="30sp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
-
-                    </LinearLayout>
+                    app:layout_constraintStart_toStartOf="parent">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -129,7 +66,7 @@
                                 android:background="@drawable/oval_background">
 
                                 <ImageView
-                                    android:id="@+id/ivProduct"
+                                    android:id="@+id/ivMilktea"
                                     android:layout_width="40sp"
                                     android:layout_height="40sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
@@ -142,46 +79,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Sản phẩm"
-                                android:textAlignment="center"
-                                android:textColor="#1b3646"
-                                android:textSize="24sp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
-
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="150dp"
-                            android:layout_margin="16dp"
-                            android:layout_weight="0.333"
-                            android:background="@drawable/teal_background"
-                            android:elevation="5dp"
-                            android:orientation="vertical"
-                            android:padding="16dp">
-
-                            <androidx.constraintlayout.widget.ConstraintLayout
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
-                                android:layout_gravity="center_horizontal"
-                                android:layout_margin="12dp"
-                                android:background="@drawable/oval_background">
-
-                                <ImageView
-                                    android:id="@+id/ivInvoiceStaff"
-                                    android:layout_width="40sp"
-                                    android:layout_height="40sp"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    app:srcCompat="@drawable/invoice" />
-                            </androidx.constraintlayout.widget.ConstraintLayout>
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Quản lý"
+                                android:text="Trà sữa"
                                 android:textAlignment="center"
                                 android:textColor="#1b3646"
                                 android:textSize="24sp"
@@ -213,20 +111,20 @@
                                 android:background="@drawable/oval_background">
 
                                 <ImageView
-                                    android:id="@+id/ivCart"
+                                    android:id="@+id/ivCoffee"
                                     android:layout_width="40sp"
                                     android:layout_height="40sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
-                                    app:srcCompat="@drawable/invoice" />
+                                    app:srcCompat="@drawable/tea" />
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Giỏ hàng"
+                                android:text="Cà phê"
                                 android:textAlignment="center"
                                 android:textColor="#1b3646"
                                 android:textSize="24sp"
@@ -251,20 +149,20 @@
                                 android:background="@drawable/oval_background">
 
                                 <ImageView
-                                    android:id="@+id/ivLogout"
+                                    android:id="@+id/ivFruitTea"
                                     android:layout_width="40sp"
                                     android:layout_height="40sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
-                                    app:srcCompat="@drawable/logout" />
+                                    app:srcCompat="@drawable/fruit_tea" />
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Nhân sự"
+                                android:text="Trà"
                                 android:textAlignment="center"
                                 android:textColor="#1b3646"
                                 android:textSize="24sp"
