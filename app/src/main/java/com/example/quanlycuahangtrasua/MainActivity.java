@@ -4,13 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.example.quanlycuahangtrasua.DesignPattern.Composite.InvoiceStaffActivity;
-
 public class MainActivity extends AppCompatActivity {
-    ImageView imageViewProduct, imageViewCart, imageViewLogout, imageInvoiceStaff;
+    ImageView imageViewProduct, imageViewCart, imageViewLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
         imageViewProduct = findViewById(R.id.ivProduct);
         imageViewCart = findViewById(R.id.ivCart);
         imageViewLogout = findViewById(R.id.ivLogout);
-        imageInvoiceStaff = findViewById(R.id.ivInvoiceStaff);
 
         imageViewProduct.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,14 +38,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        imageInvoiceStaff.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, InvoiceStaffActivity.class);
                 startActivity(intent);
             }
         });
