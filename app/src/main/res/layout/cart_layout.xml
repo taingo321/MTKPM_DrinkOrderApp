@@ -26,24 +26,34 @@
             android:id="@+id/order_total"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:text="Order total"
-            android:textSize="18dp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_marginLeft="5dp"
             android:layout_alignParentEnd="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:text="Order total"
             android:textAlignment="viewEnd"
-            android:layout_marginRight="5dp"/>
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/order_time_or_quality"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/order_day_or_name"
             android:text="Order Time"
             android:textSize="16dp"
             android:textColor="@color/black"
             android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"/>
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/order_day_or_name"
+            android:text="Status"
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="300dp"
             android:layout_marginTop="10dp"/>
     </RelativeLayout>
 

@@ -49,7 +49,6 @@ public class InvoiceStaffActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
         FirebaseRecyclerOptions<Orders> options =
                 new FirebaseRecyclerOptions.Builder<Orders>()
                         .setQuery(ordersRef, Orders.class)
