@@ -21,5 +21,14 @@ public class CoffeeIProductRepository implements IProductRepository {
                 .endAt(searchInput + "\uf8ff");
         query.addListenerForSingleValueEvent(listener);
     }
+
+    @Override
+    public Query createQuery(String searchInput) {
+          Query query = this.databaseReference
+                .orderByChild("productName")
+                .startAt(searchInput)
+                .endAt(searchInput + "\uf8ff");
+          return query;
+    }
 }
 
