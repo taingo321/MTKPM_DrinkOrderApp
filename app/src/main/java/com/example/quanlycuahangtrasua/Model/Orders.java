@@ -1,17 +1,11 @@
 package com.example.quanlycuahangtrasua.Model;
 
-
-import com.example.quanlycuahangtrasua.DesignPattern.Composite.Interface.IComposite;
-import com.example.quanlycuahangtrasua.DesignPattern.Observer.IOrderObserver;
 import com.example.quanlycuahangtrasua.DesignPattern.Composite.IComposite;
 import com.google.firebase.database.DataSnapshot;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Orders implements IComposite {
-
-    private String status;
     private String oid;
     private String totalAmount;
     private String note;
@@ -23,17 +17,14 @@ public class Orders implements IComposite {
     }
 
     public Orders(String oid, String totalAmount, String note, String date, String time,
-                  List<Cart> products, String status) {
+                  List<Cart> products) {
         this.oid = oid;
         this.totalAmount = totalAmount;
         this.note = note;
         this.date = date;
         this.time = time;
         this.products = products;
-        this.status = status;
     }
-
-
 
     public String getOid() {
         return oid;
@@ -96,8 +87,6 @@ public class Orders implements IComposite {
     }
     public Orders() {
     }
-
-
 
 
 

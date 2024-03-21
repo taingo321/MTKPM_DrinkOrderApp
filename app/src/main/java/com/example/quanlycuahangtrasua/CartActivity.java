@@ -33,17 +33,16 @@ public class CartActivity extends AppCompatActivity {
     private TextView txtTotalAmount;
     private int overTotalPrice = 0;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+
         recyclerViewCartList = findViewById(R.id.cart_list);
         recyclerViewCartList.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerViewCartList.setLayoutManager(layoutManager);
         txtTotalAmount = findViewById(R.id.total_price);
-
 
         btnNext = findViewById(R.id.next_button);
 
@@ -77,7 +76,6 @@ public class CartActivity extends AppCompatActivity {
                 holder.cartOrderDayOrName.setText(model.getProductName());
                 holder.cartOrderTimeOrQuality.setText("x" + model.getQuantity());
                 holder.orderTotalPrice.setText(model.getPrice() + "đ");
-                holder.status.setText(model.getStatus());
 
                 int oneTypeProductPrice = ((Integer.valueOf(model.getPrice()))) * Integer.valueOf(model.getQuantity());
                 overTotalPrice = overTotalPrice + oneTypeProductPrice;
