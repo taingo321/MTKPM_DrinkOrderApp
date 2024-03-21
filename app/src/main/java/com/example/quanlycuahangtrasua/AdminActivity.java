@@ -8,13 +8,14 @@ import android.view.View;
 import android.widget.ImageView;
 
 public class AdminActivity extends AppCompatActivity {
-    ImageView imageViewAddProduct, imageViewMaintain, imageViewInvoice, imageViewLogout;
+    ImageView imageViewAddProduct, imageViewCreateAccount, imageViewMaintain, imageViewInvoice, imageViewLogout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
         imageViewAddProduct = findViewById(R.id.ivAddProduct);
+        imageViewCreateAccount = findViewById(R.id.ivCreateAccount);
         imageViewMaintain = findViewById(R.id.ivMaintain);
         imageViewLogout = findViewById(R.id.ivLogout);
         imageViewInvoice = findViewById(R.id.ivInvoice);
@@ -22,6 +23,13 @@ public class AdminActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AdminActivity.this, AddNewProductActivity.class);
+                startActivity(intent);
+            }
+        });
+        imageViewCreateAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminActivity.this, RegisterActivity.class);
                 startActivity(intent);
             }
         });

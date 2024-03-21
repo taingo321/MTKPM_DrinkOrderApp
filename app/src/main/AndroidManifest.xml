@@ -71,7 +71,6 @@
             android:name=".LoginActivity"
             android:exported="true"
             android:label="Quản lý cửa hàng trà sữa">
-            android:label="Đặt thức uống Nhóm 1">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
