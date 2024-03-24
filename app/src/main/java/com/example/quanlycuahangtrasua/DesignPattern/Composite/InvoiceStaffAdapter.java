@@ -12,8 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quanlycuahangtrasua.AdminOrderProductsDetailActivity;
-import com.example.quanlycuahangtrasua.R;
 import com.example.quanlycuahangtrasua.Model.Orders;
+import com.example.quanlycuahangtrasua.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
@@ -81,5 +81,6 @@ public class InvoiceStaffAdapter extends FirebaseRecyclerAdapter<Orders, Invoice
     }
 
 }
+
 
 

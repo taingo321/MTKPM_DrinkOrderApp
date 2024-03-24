@@ -1,12 +1,13 @@
 package com.example.quanlycuahangtrasua.Model;
 
 
+import android.util.Log;
+
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.quanlycuahangtrasua.DesignPattern.Composite.Interface.IComposite;
-import com.example.quanlycuahangtrasua.DesignPattern.Observer.IOrderObserver;
-import com.example.quanlycuahangtrasua.DesignPattern.Composite.IComposite;
 import com.google.firebase.database.DataSnapshot;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Orders implements IComposite {
@@ -92,8 +93,23 @@ public class Orders implements IComposite {
 
     @Override
     public void display() {
+        Log.d("Orders", "Order ID: " + oid);
+        Log.d("Orders", "Total Amount: " + totalAmount);
+        Log.d("Orders", "Note: " + note);
+        Log.d("Orders", "Date: " + date);
+        Log.d("Orders", "Time: " + time);
+        Log.d("Orders", "Status: " + status);
+        // Hiển thị danh sách sản phẩm
+        for (Cart product : products) {
+            Log.d("Orders", "Product ID: " + product.getProductId());
+            Log.d("Orders", "Product Name: " + product.getProductName());
+            Log.d("Orders", "Quantity: " + product.getQuantity());
 
+        }
     }
+
+
+
     public Orders() {
     }
 

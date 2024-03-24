@@ -3,7 +3,6 @@ package com.example.quanlycuahangtrasua.Model;
 
 import com.example.quanlycuahangtrasua.DesignPattern.Composite.Interface.IComposite;
 
-import com.example.quanlycuahangtrasua.DesignPattern.Composite.IComposite;
 
 
 public class Products implements IComposite {
