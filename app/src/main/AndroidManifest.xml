@@ -11,21 +11,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QuanLyCuaHangTraSua"
         tools:targetApi="31">
+
         <activity
             android:name=".DesignPattern.Composite.InvoiceStaffActivity"
             android:exported="false" />
         <activity
             android:name=".FruitTeaSeachActivity"
             android:exported="false"
-            android:label="Tìm kiếm trà trái cây" />
+            android:label="Tìm kiếm trà trái cây"/>
         <activity
             android:name=".MilkTeaSearchActivity"
             android:exported="false"
-            android:label="Tìm kiếm trà sữa" />
+            android:label="Tìm kiếm trà sữa"/>
         <activity
             android:name=".CoffeeSearchActivity"
             android:exported="false"
-            android:label="Tìm kiếm cà phê" />
+            android:label="Tìm kiếm cà phê"/>
         <activity
             android:name=".SearchMenuActivity"
             android:exported="false"
@@ -70,7 +71,6 @@
             android:name=".LoginActivity"
             android:exported="true"
             android:label="Quản lý cửa hàng trà sữa">
-            android:label="Đặt thức uống Nhóm 1">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

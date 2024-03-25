@@ -4,35 +4,37 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
+//import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.TextUtils;
+//import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+//import android.widget.EditText;
+//import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+//import com.google.android.gms.tasks.OnCompleteListener;
+//import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+//import com.google.firebase.database.DataSnapshot;
+//import com.google.firebase.database.DatabaseError;
+//import com.google.firebase.database.DatabaseReference;
+//import com.google.firebase.database.FirebaseDatabase;
+//import com.google.firebase.database.ValueEventListener;
+//import java.util.HashMap;
+import com.example.quanlycuahangtrasua.DesignPattern.Builder.ValidateUsernameBuilder;
+import com.example.quanlycuahangtrasua.DesignPattern.Builder.ValidateUsername;
 
-import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
     private Button btnRegister;
     private TextInputEditText inputEditTextRegisterUsername, inputEditTextRegisterPhone, inputEditTextRegisterPassword;
     private TextInputLayout inputLayoutUsername,inputLayoutPhone,inputLayoutPassword;
     private ProgressDialog progressBar;
-    boolean isValidPhoneNumber,isValidUsername,isValidPassword=false;
+    boolean isValidPhoneNumber,isValidUsername,isValidPassword = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,58 +67,76 @@ public class RegisterActivity extends AppCompatActivity {
         String phone = inputEditTextRegisterPhone.getText().toString();
         String password = inputEditTextRegisterPassword.getText().toString();
 
-        if(areAllFieldsValid()){
-            ValidateUsername(username, phone, password);
+        if (areAllFieldsValid()) {
+            ValidateUsernameBuilder builder = new ValidateUsernameBuilder.Builder()
+                    .setUsername(username)
+                    .setPhone(phone)
+                    .setPassword(password)
+                    .setProgressBar(progressBar)
+                    .setActivity(this)
+                    .build();
+            ValidateUsername validator = new ValidateUsername(builder, this);
+            validator.validate();
         }
     }
 
-        private void ValidateUsername(String username, String phone, String password) {
-        final DatabaseReference RootRef;
-        RootRef = FirebaseDatabase.getInstance().getReference();
-
-        RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (!(snapshot.child("Users").child(username).exists())){
-                    HashMap<String, Object> userdataMap = new HashMap<>();
-                    userdataMap.put("phone", phone);
-                    userdataMap.put("password", password);
-                    userdataMap.put("username", username);
-
-                    RootRef.child("users").child(username).updateChildren(userdataMap)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()){
-                                        Toast.makeText(RegisterActivity.this, "Tài khoản của bạn đã tạo thành công", Toast.LENGTH_SHORT).show();
-                                        progressBar.dismiss();
-
-                                        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                                        startActivity(intent);
-                                    }
-                                    else {
-                                        progressBar.dismiss();
-                                        Toast.makeText(RegisterActivity.this, "Đã xảy ra lỗi,vui lòng thử lại", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-                }
-                else {
-                    Toast.makeText(RegisterActivity.this, "Tên tài khoản " + username + " đã tồn tại.", Toast.LENGTH_SHORT).show();
-                    progressBar.dismiss();
-                    Toast.makeText(RegisterActivity.this, "Vui lòng thử lại", Toast.LENGTH_SHORT).show();
-
-                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
+//    private void CreateAccount() {
+//        String username = inputEditTextRegisterUsername.getText().toString();
+//        String phone = inputEditTextRegisterPhone.getText().toString();
+//        String password = inputEditTextRegisterPassword.getText().toString();
+//
+//        if(areAllFieldsValid()){
+//            ValidateUsername(username, phone, password);
+//        }
+//    }
+//
+//        private void ValidateUsername(String username, String phone, String password) {
+//        final DatabaseReference RootRef;
+//        RootRef = FirebaseDatabase.getInstance().getReference();
+//
+//        RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (!(snapshot.child("Users").child(username).exists())){
+//                    HashMap<String, Object> userdataMap = new HashMap<>();
+//                    userdataMap.put("phone", phone);
+//                    userdataMap.put("password", password);
+//                    userdataMap.put("username", username);
+//
+//                    RootRef.child("users").child(username).updateChildren(userdataMap)
+//                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                @Override
+//                                public void onComplete(@NonNull Task<Void> task) {
+//                                    if (task.isSuccessful()){
+//                                        Toast.makeText(RegisterActivity.this, "Tài khoản của bạn đã tạo thành công", Toast.LENGTH_SHORT).show();
+//                                        progressBar.dismiss();
+//
+//                                        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+//                                        startActivity(intent);
+//                                    }
+//                                    else {
+//                                        progressBar.dismiss();
+//                                        Toast.makeText(RegisterActivity.this, "Đã xảy ra lỗi,vui lòng thử lại", Toast.LENGTH_SHORT).show();
+//                                    }
+//                                }
+//                            });
+//                }
+//                else {
+//                    Toast.makeText(RegisterActivity.this, "Tên tài khoản " + username + " đã tồn tại.", Toast.LENGTH_SHORT).show();
+//                    progressBar.dismiss();
+//                    Toast.makeText(RegisterActivity.this, "Vui lòng thử lại", Toast.LENGTH_SHORT).show();
+//
+//                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+//                    startActivity(intent);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//    }
 
     private class UsernameTextWatcher implements TextWatcher {
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
