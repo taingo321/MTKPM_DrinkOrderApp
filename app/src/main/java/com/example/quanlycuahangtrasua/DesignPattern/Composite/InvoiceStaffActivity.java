@@ -1,33 +1,16 @@
 package com.example.quanlycuahangtrasua.DesignPattern.Composite;
 
-import androidx.annotation.NonNull;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.example.quanlycuahangtrasua.AdminOrderDetailActivity;
-import com.example.quanlycuahangtrasua.AdminOrderProductsDetailActivity;
-import com.example.quanlycuahangtrasua.Model.AdminOrder;
 import com.example.quanlycuahangtrasua.Model.Orders;
-import com.example.quanlycuahangtrasua.Model.Products;
 import com.example.quanlycuahangtrasua.R;
-import com.example.quanlycuahangtrasua.ViewHolder.CartViewHolder;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.gms.measurement.api.AppMeasurementSdk;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 public class InvoiceStaffActivity extends AppCompatActivity {
     private RecyclerView recyclerViewOrdersList;

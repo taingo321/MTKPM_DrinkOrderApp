@@ -1,6 +1,9 @@
 package com.example.quanlycuahangtrasua.Model;
 
+
 import com.example.quanlycuahangtrasua.DesignPattern.Composite.IComposite;
+import com.example.quanlycuahangtrasua.DesignPattern.Composite.IComposite;
+
 
 public class Products implements IComposite {
     private String productId, productName, ingredient, price, image ;
