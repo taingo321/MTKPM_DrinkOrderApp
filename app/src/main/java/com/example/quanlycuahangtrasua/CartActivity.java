@@ -76,7 +76,7 @@ public class CartActivity extends AppCompatActivity {
                 holder.cartOrderDayOrName.setText(model.getProductName());
                 holder.cartOrderTimeOrQuality.setText("x" + model.getQuantity());
                 holder.orderTotalPrice.setText(model.getPrice() + "đ");
-
+                holder.status.setText(model.getStatus());
                 int oneTypeProductPrice = ((Integer.valueOf(model.getPrice()))) * Integer.valueOf(model.getQuantity());
                 overTotalPrice = overTotalPrice + oneTypeProductPrice;
 
