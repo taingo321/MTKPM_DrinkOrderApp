@@ -1,7 +1,21 @@
 package com.example.quanlycuahangtrasua.Model;
 
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
+import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.quanlycuahangtrasua.AdminOrderProductsDetailActivity;
 import com.example.quanlycuahangtrasua.DesignPattern.Composite.Interface.IComposite;
+import com.example.quanlycuahangtrasua.DesignPattern.Composite.InvoiceStaffAdapter;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -83,10 +97,41 @@ public class Orders implements IComposite {
         this.products = products;
     }
 
-    @Override
-    public void display() {
 
+
+    @Override
+    public void display(RecyclerView.ViewHolder viewHolder, String uid) {
+        InvoiceStaffAdapter.OrdersViewHolder holder = (InvoiceStaffAdapter.OrdersViewHolder) viewHolder;
+        DatabaseReference orderRef = FirebaseDatabase.getInstance().getReference().child("Orders").child(uid);
+        orderRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    AdminOrder adminOrder = snapshot.getValue(AdminOrder.class);
+                    if (adminOrder != null) {
+                        holder.order_key.setText(uid);
+                        holder.order_total_price.setText(adminOrder.getTotalAmount() + "đ");
+                        holder.order_date_time.setText(adminOrder.getDate() + " " + adminOrder.getTime());
+                        holder.show_order_products.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Context context = holder.itemView.getContext();
+                                Intent intent = new Intent(context, AdminOrderProductsDetailActivity.class);
+                                intent.putExtra("uid", uid);
+                                context.startActivity(intent);
+                            }
+                        });
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Orders", "onCancelled", error.toException());
+            }
+        });
     }
+
+
     public Orders() {
     }
 

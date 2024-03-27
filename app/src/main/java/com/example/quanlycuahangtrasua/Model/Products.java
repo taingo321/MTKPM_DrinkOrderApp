@@ -1,5 +1,7 @@
 package com.example.quanlycuahangtrasua.Model;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.quanlycuahangtrasua.DesignPattern.Composite.Interface.IComposite;
 
 public class Products implements IComposite {
@@ -59,7 +61,8 @@ public class Products implements IComposite {
     }
 
     @Override
-    public void display() {
+    public void display(RecyclerView.ViewHolder viewHolder, String uid) {
+
     }
 
 

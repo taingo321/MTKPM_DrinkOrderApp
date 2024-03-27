@@ -68,7 +68,6 @@ public class AdminOrderActivity extends AppCompatActivity {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 for(DataSnapshot orderSnapshot: snapshot.getChildren()){
-//                                    String orderId = orderSnapshot.getKey();
 
                                     AdminOrder adminOrder = orderSnapshot.getValue(AdminOrder.class);
 
