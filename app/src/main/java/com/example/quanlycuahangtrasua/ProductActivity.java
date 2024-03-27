@@ -30,11 +30,11 @@ public class ProductActivity extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManager;
     private String type = "",productType;
     private RadioGroup radioGroup;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
-
         radioGroup = findViewById(R.id.radioGroup);
         recyclerViewProductListManagement = findViewById(R.id.rvProductListManagement);
         recyclerViewProductListManagement.setHasFixedSize(true);

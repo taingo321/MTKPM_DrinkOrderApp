@@ -57,9 +57,8 @@ public class AdminOrderProductsDetailActivity extends AppCompatActivity {
                 holder.cartOrderDayOrName.setText(model.getDate());
 //                holder.product_Quantity_Cart.setText("x" + model.getQuantity());
                 holder.cartOrderTimeOrQuality.setText(model.getTime());
-
                 holder.orderTotalPrice.setText(model.getTotalAmount() + "đ");
-
+                holder.status.setText(model.getPaymentMethod());
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

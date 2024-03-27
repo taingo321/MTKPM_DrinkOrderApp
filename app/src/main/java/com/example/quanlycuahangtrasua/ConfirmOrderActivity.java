@@ -7,10 +7,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.quanlycuahangtrasua.DesignPattern.Observer.UserNotifier;
+import com.example.quanlycuahangtrasua.DesignPattern.Strategy.CashPaymentStrategy;
+import com.example.quanlycuahangtrasua.DesignPattern.Strategy.CreditCardPaymentStrategy;
+import com.example.quanlycuahangtrasua.DesignPattern.Strategy.PaymentStrategy;
 import com.example.quanlycuahangtrasua.Model.Cart;
 import com.example.quanlycuahangtrasua.Model.Orders;
 import com.example.quanlycuahangtrasua.Model.Products;
@@ -36,9 +42,14 @@ public class ConfirmOrderActivity extends AppCompatActivity {
     private String orderKey;
     private Button btnConfirm;
     private String totalAmount = "";
-    private String status = "" ;
+    private String paymentMethod = "";
+    private String status = "";
     private DatabaseReference ordersRef;
     private UserNotifier userNotifier;
+    private PaymentStrategy paymentStrategy;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +61,23 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         edtNoteInput = findViewById(R.id.note_input);
         btnConfirm = findViewById(R.id.confirm_button);
         userNotifier = new UserNotifier();
-
+        RadioGroup radioGroup = findViewById(R.id.payment_radio_group);
+        RadioButton cashRadioButton = findViewById(R.id.cash_payment_radio_button);
+        RadioButton onlineRadioButton = findViewById(R.id.online_payment_radio_button);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == cashRadioButton.getId()) {
+                    paymentStrategy = new CashPaymentStrategy();
+                    paymentMethod = paymentStrategy.getPaymentMethod();
+                    paymentStrategy.getPaymentMethod();
+                } else if (checkedId == onlineRadioButton.getId()) {
+                    paymentStrategy = new CreditCardPaymentStrategy();
+                    paymentMethod = paymentStrategy.getPaymentMethod();
+                    paymentStrategy.getPaymentMethod();
+                }
+            }
+        });
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,7 +103,8 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         ordersMap.put("note", edtNoteInput.getText().toString());
         ordersMap.put("date", saveCurrentDate);
         ordersMap.put("time", saveCurrentTime);
-        ordersMap.put("status", status);
+        ordersMap.put("paymentMethod", paymentMethod);
+
         DatabaseReference cartRef = FirebaseDatabase.getInstance().getReference()
                 .child("Cart List").child("User View").child(Prevalent.currentOnlineUser.getUsername()).child("Products");
         cartRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -92,7 +120,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 //                    String image = productSnapshot.child("image").getValue(String.class);
                     productList.add(new Cart(productId,productName,price,quantity,status));
                 }
-                Orders order = new Orders(orderKey, totalAmount, edtNoteInput.getText().toString(), saveCurrentDate, saveCurrentTime, productList, status);
+                Orders order = new Orders(orderKey, totalAmount, edtNoteInput.getText().toString(), saveCurrentDate, saveCurrentTime, productList, status, paymentMethod);
                 ordersRef.setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

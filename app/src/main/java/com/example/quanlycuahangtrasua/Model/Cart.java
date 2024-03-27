@@ -18,7 +18,9 @@ public class Cart {
         this.price = price;
         this.quantity = quantity;
         this.status = status;
+
     }
+
 
     public String getProductId() {
         return productId;
