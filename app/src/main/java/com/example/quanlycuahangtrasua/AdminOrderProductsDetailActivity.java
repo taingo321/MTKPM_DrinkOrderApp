@@ -25,7 +25,7 @@ public class AdminOrderProductsDetailActivity extends AppCompatActivity {
 
     private RecyclerView recyclerViewProductsList;
     RecyclerView.LayoutManager layoutManager;
-    private DatabaseReference cartListRef,orderListRef;
+    private DatabaseReference orderListRef;
     private String userId = "";
 
     @Override

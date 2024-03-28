@@ -14,18 +14,18 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.quanlycuahangtrasua.DesignPattern.Singleton.ProductTypeSingleton;
 
 public class SearchMenuActivity extends AppCompatActivity {
-    ImageView ivMilktea, ivCoffee, ivFruitTea;
+    ImageView imageViewMilktea, imageViewCoffee, imageViewFruitTea;
     private String productType;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_menu);
 
-        ivMilktea = findViewById(R.id.ivMilktea);
-        ivCoffee = findViewById(R.id.ivCoffee);
-        ivFruitTea = findViewById(R.id.ivFruitTea);
+        imageViewMilktea = findViewById(R.id.ivMilktea);
+        imageViewCoffee = findViewById(R.id.ivCoffee);
+        imageViewFruitTea = findViewById(R.id.ivFruitTea);
 
-        ivMilktea.setOnClickListener(new View.OnClickListener() {
+        imageViewMilktea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ProductTypeSingleton.getInstance().setProductType("Milk Tea");
@@ -35,7 +35,7 @@ public class SearchMenuActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        ivCoffee.setOnClickListener(new View.OnClickListener() {
+        imageViewCoffee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ProductTypeSingleton.getInstance().setProductType("Coffee");
@@ -45,7 +45,7 @@ public class SearchMenuActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        ivFruitTea.setOnClickListener(new View.OnClickListener() {
+        imageViewFruitTea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ProductTypeSingleton.getInstance().setProductType("Fruit Tea");

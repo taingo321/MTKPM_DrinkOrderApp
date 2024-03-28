@@ -37,7 +37,6 @@ public class AdminOrderActivity extends AppCompatActivity {
 
     private RecyclerView recyclerViewOrdersList;
     private DatabaseReference ordersRef;
-    private String totalAmount,date,time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

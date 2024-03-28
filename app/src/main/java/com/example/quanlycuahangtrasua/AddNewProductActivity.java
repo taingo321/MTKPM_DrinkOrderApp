@@ -42,9 +42,6 @@ public class AddNewProductActivity extends AppCompatActivity {
     private StorageReference productImagesRef;
     private DatabaseReference productTypeRef;
     private RadioGroup radioProductTypeGroup;
-    private RadioButton radioCoffee;
-    private RadioButton radioMilkTea;
-    private RadioButton radioFruitTea;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
