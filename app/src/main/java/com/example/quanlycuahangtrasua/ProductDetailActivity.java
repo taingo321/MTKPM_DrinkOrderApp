@@ -117,6 +117,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         cartMap.put("date", saveCurrentDate);
         cartMap.put("time", saveCurrentTime);
         cartMap.put("quantity", quantity);
+        cartMap.put("status", "undone");
 
         cartListRef.child("User View")
                 .child(Prevalent.currentOnlineUser.getUsername())

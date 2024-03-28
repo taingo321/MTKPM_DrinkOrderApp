@@ -13,9 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.quanlycuahangtrasua.DesignPattern.Strategy.CashPaymentStrategy;
+import com.example.quanlycuahangtrasua.DesignPattern.Strategy.CreditCardPaymentStrategy;
+import com.example.quanlycuahangtrasua.DesignPattern.Strategy.PaymentStrategy;
 import com.example.quanlycuahangtrasua.Model.Cart;
 import com.example.quanlycuahangtrasua.Prevalent.Prevalent;
 import com.example.quanlycuahangtrasua.ViewHolder.CartViewHolder;
@@ -43,8 +47,9 @@ public class CartActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerViewCartList.setLayoutManager(layoutManager);
         txtTotalAmount = findViewById(R.id.total_price);
-
         btnNext = findViewById(R.id.next_button);
+
+
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +81,7 @@ public class CartActivity extends AppCompatActivity {
                 holder.cartOrderDayOrName.setText(model.getProductName());
                 holder.cartOrderTimeOrQuality.setText("x" + model.getQuantity());
                 holder.orderTotalPrice.setText(model.getPrice() + "đ");
-
+                holder.status.setText(model.getStatus());
                 int oneTypeProductPrice = ((Integer.valueOf(model.getPrice()))) * Integer.valueOf(model.getQuantity());
                 overTotalPrice = overTotalPrice + oneTypeProductPrice;
 
