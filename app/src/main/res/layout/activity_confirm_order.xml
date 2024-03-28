@@ -59,4 +59,14 @@
             android:text="Thanh toán trực tuyến" />
     </RadioGroup>
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/payment_radio_group"
+        android:src="@mipmap/img"
+        android:id="@+id/QR"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:layout_marginTop="20dp"
+        />
 </RelativeLayout>
