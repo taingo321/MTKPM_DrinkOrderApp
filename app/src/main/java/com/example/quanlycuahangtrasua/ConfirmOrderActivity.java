@@ -8,11 +8,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.quanlycuahangtrasua.DesignPattern.Command.AddOrderCommand;
+import com.example.quanlycuahangtrasua.DesignPattern.Command.Command;
+import com.example.quanlycuahangtrasua.DesignPattern.Command.CommandInvoker;
 import com.example.quanlycuahangtrasua.Model.Cart;
 import com.example.quanlycuahangtrasua.Model.Orders;
-import com.example.quanlycuahangtrasua.Model.Products;
 import com.example.quanlycuahangtrasua.Prevalent.Prevalent;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,7 +31,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ConfirmOrderActivity extends AppCompatActivity {
 
@@ -54,12 +57,14 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ConfirmOrder();
+                CommandInvoker invoker = new CommandInvoker();
+                Command command = new AddOrderCommand(ConfirmOrderActivity.this);
+                invoker.setCommand(command);
+                invoker.executeCommand();
             }
         });
     }
-
-    private void ConfirmOrder() {
+    public void confirmOrder() {
         final String saveCurrentTime, saveCurrentDate;
         Calendar calForDate = Calendar.getInstance();
         SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd, yyyy ");

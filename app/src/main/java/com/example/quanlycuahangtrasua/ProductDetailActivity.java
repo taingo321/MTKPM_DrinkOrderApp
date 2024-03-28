@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,8 +27,10 @@ import com.squareup.picasso.Picasso;
 import com.travijuu.numberpicker.library.NumberPicker;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 public class ProductDetailActivity extends AppCompatActivity {
 
@@ -43,6 +47,8 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         productId = getIntent().getStringExtra("productId");
 
+
+
         imageViewProductDetail = findViewById(R.id.product_Image_Detail);
         txtProductNameDetail = findViewById(R.id.product_Name_Detail);
         txtProductIngredientDetail = findViewById(R.id.product_Ingre_Detail);
@@ -50,6 +56,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         btnAddProductToCart = findViewById(R.id.fabAddProductToCart);
         numberPicker = findViewById(R.id.number_picker);
+        
 
         btnAddProductToCart.setOnClickListener(new View.OnClickListener() {
             @Override

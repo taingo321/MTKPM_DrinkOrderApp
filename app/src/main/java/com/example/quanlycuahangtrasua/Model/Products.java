@@ -2,6 +2,9 @@ package com.example.quanlycuahangtrasua.Model;
 
 import com.example.quanlycuahangtrasua.DesignPattern.Composite.IComposite;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Products implements IComposite {
     private String productId, productName, ingredient, price, image ;
 
@@ -61,7 +64,6 @@ public class Products implements IComposite {
     @Override
     public void display() {
     }
-
 
 }
 

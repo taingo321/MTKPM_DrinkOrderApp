@@ -26,6 +26,7 @@
         android:layout_marginRight="20dp"
         android:hint="Ghi chú" />
 
+
     <Button
         android:id="@+id/confirm_button"
         android:layout_width="match_parent"

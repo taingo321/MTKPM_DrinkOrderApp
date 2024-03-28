@@ -32,15 +32,13 @@ public class AdminMaintainActivity extends AppCompatActivity {
     private ImageView imageViewProductImageMaintain;
     private String productId = "",typeProduct;
     private DatabaseReference productsRef;
-    private ProductTypeSingleton productTypeSingleton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_maintain);
 
         productId = getIntent().getStringExtra("productId");
-        productTypeSingleton = ProductTypeSingleton.getInstance();
-        typeProduct = productTypeSingleton.getProductType();
+        typeProduct = ProductTypeSingleton.getInstance().getProductType(); // Singleton
         productsRef = FirebaseDatabase.getInstance().getReference().child("Products").child(typeProduct).child(productId);
 
         btnApllayChange = findViewById(R.id.apply_change_button);
