@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.List;
 
 public class Orders implements IComposite {
+    private String paymentMethod;
     private String status;
     private String oid;
     private String totalAmount;
@@ -32,13 +33,30 @@ public class Orders implements IComposite {
     }
 
     public Orders(String oid, String totalAmount, String note, String date, String time,
-                  List<Cart> products, String status) {
+                  List<Cart> products, String status, String paymentMethod) {
         this.oid = oid;
         this.totalAmount = totalAmount;
         this.note = note;
         this.date = date;
         this.time = time;
         this.products = products;
+        this.status = status;
+        this.paymentMethod = paymentMethod;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -85,6 +103,11 @@ public class Orders implements IComposite {
     public List<Cart> getProducts() {
         return products;
     }
+
+    public void setProducts(List<Cart> products) {
+        this.products = products;
+    }
+
     public DataSnapshot getDataSnapshot() {
         return dataSnapshot;
     }
@@ -92,12 +115,6 @@ public class Orders implements IComposite {
     public void setDataSnapshot(DataSnapshot dataSnapshot) {
         this.dataSnapshot = dataSnapshot;
     }
-
-    public void setProducts(List<Cart> products) {
-        this.products = products;
-    }
-
-
 
     @Override
     public void display(RecyclerView.ViewHolder viewHolder, String uid) {
