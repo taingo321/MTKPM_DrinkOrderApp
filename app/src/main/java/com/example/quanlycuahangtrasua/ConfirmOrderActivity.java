@@ -13,16 +13,13 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-<<<<<<< HEAD
 import com.example.quanlycuahangtrasua.DesignPattern.Command.AddOrderCommand;
 import com.example.quanlycuahangtrasua.DesignPattern.Command.Command;
 import com.example.quanlycuahangtrasua.DesignPattern.Command.CommandInvoker;
-=======
 import com.example.quanlycuahangtrasua.DesignPattern.Observer.UserNotifier;
 import com.example.quanlycuahangtrasua.DesignPattern.Strategy.CashPaymentStrategy;
 import com.example.quanlycuahangtrasua.DesignPattern.Strategy.CreditCardPaymentStrategy;
 import com.example.quanlycuahangtrasua.DesignPattern.Strategy.PaymentStrategy;
->>>>>>> 38d6eb9616f630d7b8d45123abb237d2ddc1fec6
 import com.example.quanlycuahangtrasua.Model.Cart;
 import com.example.quanlycuahangtrasua.Model.Orders;
 import com.example.quanlycuahangtrasua.Prevalent.Prevalent;
