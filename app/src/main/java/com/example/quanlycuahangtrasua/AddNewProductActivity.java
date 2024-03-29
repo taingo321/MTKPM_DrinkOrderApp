@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.example.quanlycuahangtrasua.DesignPattern.FactoryMethod.CoffeeFactory;
 import com.example.quanlycuahangtrasua.DesignPattern.FactoryMethod.FruitTeaFactory;
-import com.example.quanlycuahangtrasua.DesignPattern.FactoryMethod.IProduct;
+import com.example.quanlycuahangtrasua.DesignPattern.FactoryMethod.Product;
 import com.example.quanlycuahangtrasua.DesignPattern.FactoryMethod.MilkTeaFactory;
 import com.example.quanlycuahangtrasua.DesignPattern.FactoryMethod.ProductFactory;
 import com.google.android.gms.tasks.Continuation;
@@ -42,9 +42,6 @@ public class AddNewProductActivity extends AppCompatActivity {
     private StorageReference productImagesRef;
     private DatabaseReference productTypeRef;
     private RadioGroup radioProductTypeGroup;
-    private RadioButton radioCoffee;
-    private RadioButton radioMilkTea;
-    private RadioButton radioFruitTea;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,7 +176,7 @@ public class AddNewProductActivity extends AppCompatActivity {
             return;
         }
 
-        IProduct product = factory.createProduct(productKey, productName, productIngredient, productPrice, downloadImageUrl);
+        Product product = factory.createProduct(productKey, productName, productIngredient, productPrice, downloadImageUrl);
 //        HashMap<String, Object> productMap = new HashMap<>();
 //        productMap.put("productId", productKey);
 //        productMap.put("productName", productName);

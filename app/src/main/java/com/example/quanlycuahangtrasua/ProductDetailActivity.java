@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,14 +27,16 @@ import com.squareup.picasso.Picasso;
 import com.travijuu.numberpicker.library.NumberPicker;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 public class ProductDetailActivity extends AppCompatActivity {
 
     private ImageView imageViewProductDetail;
-    private TextView txtProductNameDetail, txtProductIngredientDetail, txtProductPriceDetail;
-    private Button btnAddProductToCart;
+    private TextView textViewProductNameDetail, textViewProductIngredientDetail, textViewProductPriceDetail;
+    private Button buttonAddProductToCart;
     private NumberPicker numberPicker;
     private String productId = "";
 
@@ -43,15 +47,18 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         productId = getIntent().getStringExtra("productId");
 
-        imageViewProductDetail = findViewById(R.id.product_Image_Detail);
-        txtProductNameDetail = findViewById(R.id.product_Name_Detail);
-        txtProductIngredientDetail = findViewById(R.id.product_Ingre_Detail);
-        txtProductPriceDetail = findViewById(R.id.product_Price_Detail);
 
-        btnAddProductToCart = findViewById(R.id.fabAddProductToCart);
+
+        imageViewProductDetail = findViewById(R.id.product_Image_Detail);
+        textViewProductNameDetail = findViewById(R.id.product_Name_Detail);
+        textViewProductIngredientDetail = findViewById(R.id.product_Ingre_Detail);
+        textViewProductPriceDetail = findViewById(R.id.product_Price_Detail);
+
+        buttonAddProductToCart = findViewById(R.id.fabAddProductToCart);
         numberPicker = findViewById(R.id.number_picker);
 
-        btnAddProductToCart.setOnClickListener(new View.OnClickListener() {
+
+        buttonAddProductToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 fabAddProductToCart();
@@ -104,9 +111,9 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         final HashMap<String, Object> cartMap = new HashMap<>();
         cartMap.put("productId", productID);
-        cartMap.put("productName", txtProductNameDetail.getText().toString());
-        cartMap.put("price", txtProductPriceDetail.getText().toString());
-        cartMap.put("ingredient", txtProductIngredientDetail.getText().toString());
+        cartMap.put("productName", textViewProductNameDetail.getText().toString());
+        cartMap.put("price", textViewProductPriceDetail.getText().toString());
+        cartMap.put("ingredient", textViewProductIngredientDetail.getText().toString());
         cartMap.put("date", saveCurrentDate);
         cartMap.put("time", saveCurrentTime);
         cartMap.put("quantity", quantity);
@@ -148,9 +155,9 @@ public class ProductDetailActivity extends AppCompatActivity {
                 if (snapshot.exists()){
                     Products products = snapshot.getValue(Products.class);
 
-                    txtProductNameDetail.setText(products.getProductName());
-                    txtProductIngredientDetail.setText(products.getIngredient());
-                    txtProductPriceDetail.setText(products.getPrice());
+                    textViewProductNameDetail.setText(products.getProductName());
+                    textViewProductIngredientDetail.setText(products.getIngredient());
+                    textViewProductPriceDetail.setText(products.getPrice());
                     Picasso.get().load(products.getImage()).into(imageViewProductDetail);
                 }
             }

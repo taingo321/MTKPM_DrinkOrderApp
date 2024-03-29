@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputLayout inputLayoutUsername,inputLayoutPassword;
     private ProgressDialog progressBar;
     private AppCompatButton compatButtonLogin;
-    private TextView txtAdmin, txtNotAdmin;
+    private TextView textViewAdmin, textViewNotAdmin;
     //private TextView ChangeToReg;
     private String parentName = "Users";
     boolean isValidUsername,isValidPassword = false;
@@ -51,8 +51,8 @@ public class LoginActivity extends AppCompatActivity {
 
         inputEditTextUsername.addTextChangedListener(new LoginActivity.UsernameTextWatcher());
         inputEditTextPassword.addTextChangedListener(new LoginActivity.PasswordTextWatcher());
-        txtAdmin = findViewById(R.id.admin_panel_link);
-        txtNotAdmin = findViewById(R.id.not_admin_panel_link);
+        textViewAdmin = findViewById(R.id.admin_panel_link);
+        textViewNotAdmin = findViewById(R.id.not_admin_panel_link);
         compatButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,22 +62,22 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
-        txtAdmin.setOnClickListener(new View.OnClickListener() {
+        textViewAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 compatButtonLogin.setText("Đăng nhập Admin");
-                txtAdmin.setVisibility(View.INVISIBLE);
-                txtNotAdmin.setVisibility(View.VISIBLE);
+                textViewAdmin.setVisibility(View.INVISIBLE);
+                textViewNotAdmin.setVisibility(View.VISIBLE);
                 parentName = "Admins";
             }
         });
 
-        txtNotAdmin.setOnClickListener(new View.OnClickListener() {
+        textViewNotAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 compatButtonLogin.setText("Đăng nhập");
-                txtAdmin.setVisibility(View.VISIBLE);
-                txtNotAdmin.setVisibility(View.INVISIBLE);
+                textViewAdmin.setVisibility(View.VISIBLE);
+                textViewNotAdmin.setVisibility(View.INVISIBLE);
                 parentName = "Users";
             }
         });

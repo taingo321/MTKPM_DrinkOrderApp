@@ -30,7 +30,7 @@ import com.example.quanlycuahangtrasua.DesignPattern.Builder.ValidateUsername;
 
 
 public class RegisterActivity extends AppCompatActivity {
-    private Button btnRegister;
+    private Button buttonRegister;
     private TextInputEditText inputEditTextRegisterUsername, inputEditTextRegisterPhone, inputEditTextRegisterPassword;
     private TextInputLayout inputLayoutUsername,inputLayoutPhone,inputLayoutPassword;
     private ProgressDialog progressBar;
@@ -41,7 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        btnRegister = findViewById(R.id.register);
+        buttonRegister = findViewById(R.id.register);
         inputEditTextRegisterUsername = findViewById(R.id.edt_UserName_reg);
         inputEditTextRegisterPhone = findViewById(R.id.edt_Phone_reg);
         inputEditTextRegisterPassword = findViewById(R.id.edt_Pass_reg);
@@ -54,7 +54,7 @@ public class RegisterActivity extends AppCompatActivity {
         inputEditTextRegisterUsername.addTextChangedListener(new UsernameTextWatcher());
         inputEditTextRegisterPhone.addTextChangedListener(new PhoneTextWatcher());
         inputEditTextRegisterPassword.addTextChangedListener(new PasswordTextWatcher());
-        btnRegister.setOnClickListener(new View.OnClickListener() {
+        buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CreateAccount();

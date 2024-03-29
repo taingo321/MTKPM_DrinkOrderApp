@@ -33,8 +33,8 @@ import com.google.firebase.database.FirebaseDatabase;
 public class CartActivity extends AppCompatActivity {
     private RecyclerView recyclerViewCartList;
     private RecyclerView.LayoutManager layoutManager;
-    private Button btnNext;
-    private TextView txtTotalAmount;
+    private Button buttonNext;
+    private TextView textViewTotalAmount;
     private int overTotalPrice = 0;
 
     @Override
@@ -46,15 +46,15 @@ public class CartActivity extends AppCompatActivity {
         recyclerViewCartList.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerViewCartList.setLayoutManager(layoutManager);
-        txtTotalAmount = findViewById(R.id.total_price);
-        btnNext = findViewById(R.id.next_button);
+        textViewTotalAmount = findViewById(R.id.total_price);
+        buttonNext = findViewById(R.id.next_button);
 
 
 
-        btnNext.setOnClickListener(new View.OnClickListener() {
+        buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                txtTotalAmount.setText("Tổng tiền = " + String.valueOf(overTotalPrice) + "đ");
+                textViewTotalAmount.setText("Tổng tiền = " + String.valueOf(overTotalPrice) + "đ");
 
                 Intent intent = new Intent(CartActivity.this, ConfirmOrderActivity.class);
                 intent.putExtra("Tổng tiền", String.valueOf(overTotalPrice));

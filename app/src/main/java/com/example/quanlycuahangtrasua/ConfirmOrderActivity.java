@@ -14,13 +14,15 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.quanlycuahangtrasua.DesignPattern.Command.AddOrderCommand;
+import com.example.quanlycuahangtrasua.DesignPattern.Command.Command;
+import com.example.quanlycuahangtrasua.DesignPattern.Command.CommandInvoker;
 import com.example.quanlycuahangtrasua.DesignPattern.Observer.UserNotifier;
 import com.example.quanlycuahangtrasua.DesignPattern.Strategy.CashPaymentStrategy;
 import com.example.quanlycuahangtrasua.DesignPattern.Strategy.CreditCardPaymentStrategy;
 import com.example.quanlycuahangtrasua.DesignPattern.Strategy.PaymentStrategy;
 import com.example.quanlycuahangtrasua.Model.Cart;
 import com.example.quanlycuahangtrasua.Model.Orders;
-import com.example.quanlycuahangtrasua.Model.Products;
 import com.example.quanlycuahangtrasua.Prevalent.Prevalent;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -35,13 +37,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ConfirmOrderActivity extends AppCompatActivity {
 
-    private EditText edtNoteInput;
+    private EditText editTextNoteInput;
     private String orderKey;
-    private Button btnConfirm;
+    private Button buttonConfirm;
     private String totalAmount = "";
     private String paymentMethod = "";
     private String status = "";
@@ -59,8 +60,8 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders");
         totalAmount = getIntent().getStringExtra("Tổng tiền");
         Toast.makeText(this, "Tổng tiền = " + totalAmount + "đ", Toast.LENGTH_SHORT).show();
-        edtNoteInput = findViewById(R.id.note_input);
-        btnConfirm = findViewById(R.id.confirm_button);
+        editTextNoteInput = findViewById(R.id.note_input);
+        buttonConfirm = findViewById(R.id.confirm_button);
         userNotifier = new UserNotifier();
         RadioGroup radioGroup = findViewById(R.id.payment_radio_group);
         RadioButton cashRadioButton = findViewById(R.id.cash_payment_radio_button);
@@ -83,15 +84,17 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                 }
             }
         });
-        btnConfirm.setOnClickListener(new View.OnClickListener() {
+        buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ConfirmOrder();
+                CommandInvoker invoker = new CommandInvoker();
+                Command command = new AddOrderCommand(ConfirmOrderActivity.this);
+                invoker.setCommand(command);
+                invoker.executeCommand();
             }
         });
     }
-
-    private void ConfirmOrder() {
+    public void confirmOrder() {
         final String saveCurrentTime, saveCurrentDate;
         Calendar calForDate = Calendar.getInstance();
         SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd, yyyy ");
@@ -105,7 +108,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         HashMap<String, Object> ordersMap = new HashMap<>();
         ordersMap.put("oid", orderKey);
         ordersMap.put("totalAmount", totalAmount);
-        ordersMap.put("note", edtNoteInput.getText().toString());
+        ordersMap.put("note", editTextNoteInput.getText().toString());
         ordersMap.put("date", saveCurrentDate);
         ordersMap.put("time", saveCurrentTime);
         ordersMap.put("paymentMethod", paymentMethod);
@@ -125,7 +128,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 //                    String image = productSnapshot.child("image").getValue(String.class);
                     productList.add(new Cart(productId,productName,price,quantity,status));
                 }
-                Orders order = new Orders(orderKey, totalAmount, edtNoteInput.getText().toString(), saveCurrentDate, saveCurrentTime, productList, status, paymentMethod);
+                Orders order = new Orders(orderKey, totalAmount, editTextNoteInput.getText().toString(), saveCurrentDate, saveCurrentTime, productList, status, paymentMethod);
                 ordersRef.setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

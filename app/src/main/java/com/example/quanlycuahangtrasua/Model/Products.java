@@ -4,6 +4,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quanlycuahangtrasua.DesignPattern.Composite.Interface.IComposite;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Products implements IComposite {
     private String productId, productName, ingredient, price, image ;
 
@@ -64,7 +67,6 @@ public class Products implements IComposite {
     public void display(RecyclerView.ViewHolder viewHolder, String uid) {
 
     }
-
 
 }
 

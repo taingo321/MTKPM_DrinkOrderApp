@@ -28,10 +28,10 @@ import com.squareup.picasso.Picasso;
 
 public class MilkTeaSearchActivity extends AppCompatActivity {
 
-    private EditText edtProductName;
-    private Button btnSearch;
+    private EditText editTextProductName;
+    private Button buttonSearch;
     private RecyclerView recyclerViewSearchList;
-    private IProductRepository IProductRepository;
+    private IProductRepository productRepository;
     private String searchInput;
 
     @Override
@@ -39,17 +39,17 @@ public class MilkTeaSearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_milk_tea_search);
 
-        IProductRepository = new MilkTeaIProductRepository();
+        productRepository = new MilkTeaIProductRepository();
 
-        edtProductName = findViewById(R.id.search_product_name);
-        btnSearch = findViewById(R.id.milktea_search_btn);
+        editTextProductName = findViewById(R.id.search_product_name);
+        buttonSearch = findViewById(R.id.milktea_search_btn);
         recyclerViewSearchList = findViewById(R.id.milktea_search_list);
         recyclerViewSearchList.setLayoutManager(new LinearLayoutManager(MilkTeaSearchActivity.this));
 
-        btnSearch.setOnClickListener(new View.OnClickListener() {
+        buttonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                searchInput = edtProductName.getText().toString();
+                searchInput = editTextProductName.getText().toString();
                 System.out.println("SearchInput: " + searchInput);
                 searchProducts();
             }
@@ -60,14 +60,14 @@ public class MilkTeaSearchActivity extends AppCompatActivity {
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Query query = IProductRepository.createQuery(searchInput);
+                Query query = productRepository.createQuery(searchInput);
                 setupRecyclerView(query);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         };
-        IProductRepository.searchProducts(searchInput,valueEventListener);
+        productRepository.searchProducts(searchInput,valueEventListener);
     }
 
     private void setupRecyclerView(Query query) {

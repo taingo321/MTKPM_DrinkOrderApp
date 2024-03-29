@@ -17,6 +17,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.quanlycuahangtrasua.DesignPattern.Command.Command;
+import com.example.quanlycuahangtrasua.DesignPattern.Command.CommandInvoker;
+import com.example.quanlycuahangtrasua.DesignPattern.Command.RemoveOrderCommand;
 import com.example.quanlycuahangtrasua.Model.AdminOrder;
 import com.example.quanlycuahangtrasua.Model.Orders;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -34,7 +37,6 @@ public class AdminOrderActivity extends AppCompatActivity {
 
     private RecyclerView recyclerViewOrdersList;
     private DatabaseReference ordersRef;
-    private String totalAmount,date,time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,8 +114,10 @@ public class AdminOrderActivity extends AppCompatActivity {
                                     public void onClick(DialogInterface dialog, int i) {
                                         if (i == 0){
                                             String uID = getRef(position).getKey();
-
-                                            RemoveOrder(uID);
+                                            CommandInvoker invoker = new CommandInvoker();
+                                            Command command = new RemoveOrderCommand(AdminOrderActivity.this, uID);
+                                            invoker.setCommand(command);
+                                            invoker.executeCommand();
                                         }
                                         else {
                                             finish();
@@ -137,7 +141,7 @@ public class AdminOrderActivity extends AppCompatActivity {
         adapter.startListening();
     }
 
-    private void RemoveOrder(String uID) {
+    public void removeOrder(String uID) {
         ordersRef.child(uID).removeValue();
     }
 
