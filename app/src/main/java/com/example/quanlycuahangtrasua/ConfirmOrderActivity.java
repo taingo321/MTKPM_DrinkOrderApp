@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -48,6 +49,10 @@ public class ConfirmOrderActivity extends AppCompatActivity {
     private DatabaseReference ordersRef;
     private UserNotifier userNotifier;
     private PaymentStrategy paymentStrategy;
+    private ImageView imgView;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +66,8 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         RadioGroup radioGroup = findViewById(R.id.payment_radio_group);
         RadioButton cashRadioButton = findViewById(R.id.cash_payment_radio_button);
         RadioButton onlineRadioButton = findViewById(R.id.online_payment_radio_button);
+        imgView = findViewById(R.id.QR);
+        imgView.setVisibility(View.GONE);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -68,10 +75,12 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                     paymentStrategy = new CashPaymentStrategy();
                     paymentMethod = paymentStrategy.getPaymentMethod();
                     paymentStrategy.getPaymentMethod();
+                    imgView.setVisibility(View.GONE);
                 } else if (checkedId == onlineRadioButton.getId()) {
                     paymentStrategy = new CreditCardPaymentStrategy();
                     paymentMethod = paymentStrategy.getPaymentMethod();
                     paymentStrategy.getPaymentMethod();
+                    imgView.setVisibility(View.VISIBLE);
                 }
             }
         });
